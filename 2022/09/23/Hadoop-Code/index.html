@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:300,300italic,400,400italic,700,700italic|Open Sans:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"haoyulll.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Hadoop streaming &amp; MRJob">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop Code">
+<meta property="og:url" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/index.html">
+<meta property="og:site_name" content="Haoyu Li&#39;s note">
+<meta property="og:description" content="Hadoop streaming &amp; MRJob">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/MRJob.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/MRJob_test.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/MRJob_test2.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/output.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/combiner.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/MR_methods.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/MR_demo.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/stripe1.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/stripe2.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/comparison.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/3_1.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/3_2.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/Order_inversion.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/Sec_sort1.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/Sec_sort2.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/Sec_sort3.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/SEC_sort.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/Inverted_ind.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/term_weight.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/DF_sec.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/prac1.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/prac2.png">
+<meta property="article:published_time" content="2022-09-23T09:24:37.000Z">
+<meta property="article:modified_time" content="2022-10-20T06:58:13.059Z">
+<meta property="article:author" content="Haoyu Li">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://haoyulll.github.io/2022/09/23/Hadoop-Code/MRJob.png">
+
+<link rel="canonical" href="https://haoyulll.github.io/2022/09/23/Hadoop-Code/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Hadoop Code | Haoyu Li's note</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Haoyulll" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Haoyu Li's note</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://haoyulll.github.io/2022/09/23/Hadoop-Code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Haoyu Li">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Haoyu Li's note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hadoop Code
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-09-23 19:24:37" itemprop="dateCreated datePublished" datetime="2022-09-23T19:24:37+10:00">2022-09-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-10-20 17:58:13" itemprop="dateModified" datetime="2022-10-20T17:58:13+11:00">2022-10-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Hadoop streaming &amp; MRJob</p>
+<span id="more"></span>
+<h1 id="Hadoop-Streaming"><a href="#Hadoop-Streaming" class="headerlink" title="Hadoop Streaming"></a>Hadoop Streaming</h1><p>Hadoop streaming is a utility that comes with the Hadoop distribution. Hadoop streaming allows us to create and run Map/Reduce jobs with any executable or scripts as the mapper and/or the reducer.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mapred streaming \</span><br><span class="line">	-input myInputDirs \</span><br><span class="line">	-output myOutputDir \</span><br><span class="line">	-mapper /bin/cat \</span><br><span class="line">	-reducer /usr/bin/wc</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Mapper</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="comment">##--- read process in run by MapReduce Framework ---</span></span><br><span class="line"></span><br><span class="line"><span class="comment">##--- read line by line ---</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</span><br><span class="line">  <span class="comment">##--- remove leading and trailing whitespaces ---</span></span><br><span class="line">  line = line.strip()</span><br><span class="line">  </span><br><span class="line">  <span class="comment">##--- split the line into words</span></span><br><span class="line">  words = line.split()</span><br><span class="line">  </span><br><span class="line">  <span class="comment">##-- output tuples [word, 1] in tab-delimited format</span></span><br><span class="line">  <span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;%s\t%s&#x27;</span> % (word, <span class="string">&quot;1&quot;</span>))</span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Reducer</p>
+<p>Version1</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> operator <span class="keyword">import</span> itemgetter</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">current_word = <span class="literal">None</span></span><br><span class="line">current_count = <span class="number">0</span></span><br><span class="line">word = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># read the entire line from STDIN</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</span><br><span class="line">  line = line.strip()</span><br><span class="line">  <span class="comment"># split with the first &#x27;\t&#x27;</span></span><br><span class="line">  word, count = line.split(<span class="string">&#x27;\t&#x27;</span>, <span class="number">1</span>)</span><br><span class="line">  <span class="comment"># convert count (currently a string) to int</span></span><br><span class="line">  <span class="keyword">try</span>:</span><br><span class="line">    count = <span class="built_in">int</span>(count)</span><br><span class="line">  <span class="keyword">except</span> ValueError:</span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment"># merge process</span></span><br><span class="line">  <span class="keyword">if</span> current_word == word:</span><br><span class="line">    current_count += count</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">if</span> current_word:</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&#x27;%s\t%s&#x27;</span> % (current_word, current_count))</span><br><span class="line">    </span><br><span class="line">    current_count = count</span><br><span class="line">    current_word = word</span><br><span class="line"></span><br><span class="line"><span class="comment"># do not forget to output the last word if needed!</span></span><br><span class="line"><span class="keyword">if</span> current_word == word:</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;%s\t%s&#x27;</span> % (current_word, current_count))</span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Verson 2</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">results = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</span><br><span class="line">  word, frequency = line.strip().split(<span class="string">&#x27;\t&#x27;</span>, <span class="number">1</span>)</span><br><span class="line">  <span class="comment"># if no word exsiting, then set default number to word with 0</span></span><br><span class="line">  results[word] = results.get(word, <span class="number">0</span>) + <span class="built_in">int</span>(frequency)</span><br><span class="line">words = <span class="built_in">list</span>(results.keys())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">  <span class="built_in">print</span>(word, results[word])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Buffer the input from stdin in memory for aggregation</li>
+<li>No order issue</li>
+<li>Memory bottleneck</li>
+</ul>
+<blockquote>
+<p>Script</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> inputText | python mapper.py &gt; intermddiateResult</span><br><span class="line"><span class="built_in">cat</span> intermddiateResult | <span class="built_in">sort</span> -k1,1 | python reducer.py</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Run On Hadoop</p>
+</blockquote>
+<p><code>python file pre-exit on the machines in cluster</code></p>
+<ul>
+<li>start HDFS and YARN</li>
+<li>Store your input files into a <code>folder in HDFS</code></li>
+<li>Utilize the Hadoop-streaming jar file to run MapReduce streaming jobs</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hadoop jar hadoop/share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar \</span><br><span class="line">	-input input \</span><br><span class="line">	-output output \</span><br><span class="line">	-mapper /home/comp9313/mapper.py \</span><br><span class="line">	-reducer /home/comp9313/reducer.py</span><br></pre></td></tr></table></figure>
+<ul>
+<li>check result</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -cat output/part*</span><br></pre></td></tr></table></figure>
+<p><code>python file NOT pre-exit on the machines in cluster</code></p>
+<p>Using <code>-file</code>option to tell the framework to pack them as a part of job submission, which can cause the python executable shipped to the cluster machines as a part of job submission.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hadoop jar hadoop/share/hadoop/tools/lib/hadoop-streaming-3.3.2.jar \</span><br><span class="line">	-input input \</span><br><span class="line">	-output output \</span><br><span class="line">	-mapper /home/comp9313/mapper.py \</span><br><span class="line">	-reducer /home/comp9313/reducer.py \</span><br><span class="line">	-file /home/comp9313/mapper.py \</span><br><span class="line">	-file /home/comp9313/reducer.py</span><br></pre></td></tr></table></figure>
+<ul>
+<li>if combiner is needed: add the <code>-combiner</code>option</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-combiner /home/comp9313/combiner.py</span><br></pre></td></tr></table></figure>
+<h1 id="MRJob"><a href="#MRJob" class="headerlink" title="MRJob"></a>MRJob</h1><p>Open a file called <code>mr_word_count.py</code> , with</p>
+<img src="/2022/09/23/Hadoop-Code/MRJob.png" class="" title="This is an image">
+<p>add this at the end</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__==<span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">  MRWordCounter.run() <span class="comment"># where MRWordCounter is your job class</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>By default, MRJob will run your job in a single Python process. It’s not exactly distributed computing!</li>
+<li>To run job in multiple subprocesses with a few Hadoop features simulated, use -r local</li>
+<li>To run it on your Hadoop cluster, use -r hadoop</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python my_job.py –r hadoop hdfs:///my_home/my_file</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>Test and Debug MRJob Locally</strong></p>
+<img src="/2022/09/23/Hadoop-Code/MRJob_test.png" class="" title="This is an image">
+</li>
+<li><p>Test and Deybug MRJob in Hadoop</p>
+<img src="/2022/09/23/Hadoop-Code/MRJob_test2.png" class="" title="This is an image">
+</li>
+</ul>
+<h1 id="Hadoop-File-System-Shell"><a href="#Hadoop-File-System-Shell" class="headerlink" title="Hadoop File System Shell"></a>Hadoop File System Shell</h1><ul>
+<li><code>hadoop fs (args)</code><ul>
+<li>fs relates to generic file system that can point to any file system like local HDFS etc. So this can be used when you are dealing with different file systems such as Local FS, HFTP, …</li>
+</ul>
+</li>
+<li><p><del><code>hadoop dfs (args)</code></del></p>
+<ul>
+<li>dfs is very specific to HDFS. It would work for operations relates to HDFS. This has been deprecated and we should use <code>hdfs dfs</code></li>
+</ul>
+</li>
+<li><p><code>hdfs dfs(args)</code></p>
+<ul>
+<li>It would work for operations relates to HDFS.</li>
+</ul>
+</li>
+<li><p><strong>Hadoop streaming command line example</strong></p>
+<ul>
+<li><p>one reducer(default) output3</p>
+</li>
+<li><p>two reducer output2</p>
+<ul>
+<li><img src="/2022/09/23/Hadoop-Code/output.png" class="" title="This is an image">
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hadoop jar 		$HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar \</span><br><span class="line">-D mapreduce.job.reduces=2 \</span><br><span class="line">-input input \</span><br><span class="line">-output output3 \</span><br><span class="line">-mapper /bin/cat \</span><br><span class="line"> -reducer /usr/bin/wc</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><img src="/2022/09/23/Hadoop-Code/combiner.png" class="" title="This is an image">
+</li>
+</ul>
+<ul>
+<li><p><strong>MRJob command line example</strong></p>
+<p>Mr_word_count.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mrjob.job <span class="keyword">import</span> MRJob</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MRWordFrequencyCount</span>(<span class="title class_ inherited__">MRJob</span>):</span><br><span class="line">  	<span class="keyword">def</span> <span class="title function_">mapper</span>(<span class="params">self, _, line</span>):</span><br><span class="line">      	<span class="keyword">yield</span> <span class="string">&quot;chars&quot;</span>, <span class="built_in">len</span>(line)</span><br><span class="line">        <span class="keyword">yield</span> <span class="string">&quot;words&quot;</span>, <span class="built_in">len</span>(line.split())</span><br><span class="line">        <span class="keyword">yield</span> <span class="string">&quot;lines&quot;</span>, <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reducer</span>(<span class="params">self, key, values</span>):</span><br><span class="line">      	<span class="keyword">yield</span> key, <span class="built_in">sum</span>(values)</span><br><span class="line">        </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">  	MRWordFrequencyCount.run()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Run code locally, output in terminal</p>
+<p><code>python3 mr_word_count.py ~/pg100.txt</code>        </p>
+<p>run in Hadoop, use the “-r hadoop” option, output file is in local</p>
+<p><code>python3 mr_word_count.py -r hadoop &lt; pg100.txt &gt; output</code></p>
+<p>files are in HDFS, run:</p>
+<p><code>python3 mr_word_count.py -r hadoop hdfs://localhost:9000/user/lhy/input</code></p>
+<p>store results in HDFS, run:</p>
+<p><code>python mr_word_count.py -r hadoop hdfs://localhost:9000/user/comp9313/input -o hdfs://localhost:9000/user/comp9313/output</code></p>
+<h1 id="MapReduce-algorithm-Design"><a href="#MapReduce-algorithm-Design" class="headerlink" title="MapReduce algorithm Design"></a>MapReduce algorithm Design</h1><h2 id="Design-Pattern-1-Combiner-In-mapper-Combining"><a href="#Design-Pattern-1-Combiner-In-mapper-Combining" class="headerlink" title="Design Pattern 1: Combiner/In-mapper Combining"></a>Design Pattern 1: Combiner/In-mapper Combining</h2><h3 id="Local-aggregation"><a href="#Local-aggregation" class="headerlink" title="Local aggregation"></a>Local aggregation</h3><h4 id="Word-Count-Version1"><a href="#Word-Count-Version1" class="headerlink" title="Word Count Version1"></a>Word Count Version1</h4><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class MAPPER</span><br><span class="line">	method MAP(docid a, doc d)</span><br><span class="line">		H &lt;- new AssociativeArray // created for single doc file</span><br><span class="line">		for all term t in doc d do</span><br><span class="line">			H&#123;t&#125; &lt;- H&#123;t&#125; + 1</span><br><span class="line">		for all term t in H do</span><br><span class="line">			EMIT(term t, count H&#123;t&#125;)</span><br></pre></td></tr></table></figure>
+<p>In this case, there are still same keys in different docs. </p>
+<h4 id="Word-Count-Version-2-In-mapper-combining"><a href="#Word-Count-Version-2-In-mapper-combining" class="headerlink" title="Word Count Version 2 - In-mapper combining"></a>Word Count Version 2 - In-mapper combining</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class MAPPER</span><br><span class="line">	method INITIALIZE</span><br><span class="line">		H &lt;- new AssociativeArray // created for all docs</span><br><span class="line">	method MAP(docid a, doc d)</span><br><span class="line">		for all term t in doc d do</span><br><span class="line">			H&#123;t&#125; &lt;- H&#123;t&#125; + 1</span><br><span class="line">	method CLOSE</span><br><span class="line">		for all term t in H do</span><br><span class="line">			EMIT(term t, count H&#123;t&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>fold the functionality fo the combiner into mapper by preserving state across multiple map calls.</li>
+<li>Drawbacks: high usage of in memory storage. </li>
+</ul>
+<h3 id="Combiner-Design"><a href="#Combiner-Design" class="headerlink" title="Combiner Design"></a>Combiner Design</h3><p>Difference between combiner and reducer</p>
+<ul>
+<li>Combiner does local aggregation</li>
+<li>reducer does global aggregation</li>
+</ul>
+<p>Both input and output data types must be consistent with the output of mapper(or input of reducer)</p>
+<h4 id="Computing-the-Mean-version-1"><a href="#Computing-the-Mean-version-1" class="headerlink" title="Computing the Mean: version 1"></a>Computing the Mean: version 1</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class MAPPER</span><br><span class="line">	method MAP(string t, integer r)</span><br><span class="line">		EMIT(string t, integer r)</span><br><span class="line">class REDUCER</span><br><span class="line">	method REDUCE(string t, integers[r1, r2, ...]) </span><br><span class="line">		sum &lt;- 0</span><br><span class="line">		count &lt;- 0</span><br><span class="line">		for all integer r in integers[r1, r2, ...] do</span><br><span class="line">			sum &lt;- sum + r</span><br><span class="line">			count &lt;- count + 1</span><br><span class="line">		ravg &lt;- sum / count</span><br><span class="line">		EMIT(string t, integer ravg)</span><br></pre></td></tr></table></figure>
+<p>In this case, we cannot use reducer as combiner, because <script type="math/tex">Mean(1, 2, 3, 4, 5) \neq Mean(Mean(1,2), Mean(3,4,5))</script></p>
+<h4 id="Computing-the-Mean-version2"><a href="#Computing-the-Mean-version2" class="headerlink" title="Computing the Mean: version2"></a>Computing the Mean: version2</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class MAPPER</span><br><span class="line">	method MAP(string t, integer r)</span><br><span class="line">		EMIT(string t, integer r)</span><br><span class="line">		</span><br><span class="line">class COMBINER</span><br><span class="line">	method COMBINE(string t, integers[r1, r2, ...])</span><br><span class="line">		sum &lt;- 0</span><br><span class="line">		count &lt;- 0</span><br><span class="line">		for all integer r in integers [r1, r2, ...] do</span><br><span class="line">			sum &lt;- sum + r</span><br><span class="line">			count &lt;- count + 1</span><br><span class="line">		EMIT(string t, pair(sum, count))</span><br><span class="line">		</span><br><span class="line">class REDUCER</span><br><span class="line">	method REDUCE(string t, pairs[(s1,c1), (s2,c2)...])</span><br><span class="line">		sum &lt;- 0</span><br><span class="line">		count &lt;- 0</span><br><span class="line">		for all pair(s, c) in pairs[(s1,c1), (s2,c2)...] do</span><br><span class="line">			sum &lt;- sum + s</span><br><span class="line">			count &lt;- count + c</span><br><span class="line">		ravg &lt;- sum/count</span><br><span class="line">		EMIT(string t, integer ravg)</span><br><span class="line">		</span><br></pre></td></tr></table></figure>
+<p>logical is right, but output &amp; input format is wrong. </p>
+<p>Reason: Combiner is just a optimisation, so the code should also work without combiner.</p>
+<h4 id="Computing-the-Mean-version3"><a href="#Computing-the-Mean-version3" class="headerlink" title="Computing the Mean: version3"></a>Computing the Mean: version3</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class MAPPER</span><br><span class="line">	method MAP(string t, integer r)</span><br><span class="line">		EMIT(string t, pair(r,1))</span><br><span class="line">		</span><br><span class="line">class COMBINER</span><br><span class="line">	method COMBINE(string t, pairs[(s1,c1), (s2,c2)...])</span><br><span class="line">		sum &lt;- 0</span><br><span class="line">		count &lt;- 0</span><br><span class="line">		for all pair(s, c) in pairs[(s1,c1), (s2,c2)...] do</span><br><span class="line">			sum &lt;- sum + r</span><br><span class="line">			count &lt;- count + 1</span><br><span class="line">		EMIT(string t, pair(sum, count))</span><br><span class="line">		</span><br><span class="line">class REDUCER</span><br><span class="line">	method REDUCE(string t, pairs[(s1,c1), (s2,c2)...])</span><br><span class="line">		sum &lt;- 0</span><br><span class="line">		count &lt;- 0</span><br><span class="line">		for all pair(s, c) in pairs[(s1,c1), (s2,c2)...] do</span><br><span class="line">			sum &lt;- sum + s</span><br><span class="line">			count &lt;- count + c</span><br><span class="line">		ravg &lt;- sum/count</span><br><span class="line">		EMIT(string t, integer ravg)</span><br><span class="line">		</span><br></pre></td></tr></table></figure>
+<p>input of combiner == input of reducer</p>
+<p>output of combiner == output of mapper</p>
+<h4 id="Computing-the-Mean-version4-in-mapper-combining"><a href="#Computing-the-Mean-version4-in-mapper-combining" class="headerlink" title="Computing the Mean: version4 -  in-mapper combining"></a>Computing the Mean: version4 -  in-mapper combining</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class MAPPER</span><br><span class="line">	method INITIALIZE</span><br><span class="line">		S &lt;- new AssociativeArray</span><br><span class="line">		C &lt;- new AssociativeArray</span><br><span class="line">		// store globally ( but still within the MAPPER)</span><br><span class="line">		</span><br><span class="line">	method MAP(string t, integer r)</span><br><span class="line">		S&#123;t&#125; &lt;- S&#123;t&#125; + r</span><br><span class="line">		C&#123;t&#125; &lt;- C&#123;t&#125; + r</span><br><span class="line">	</span><br><span class="line">	method CLOSE</span><br><span class="line">		for all term t in S do</span><br><span class="line">			EMIT(term t, pair (S&#123;t&#125;, C&#123;t&#125;))</span><br></pre></td></tr></table></figure>
+<h3 id="Implementation-in-MRJob"><a href="#Implementation-in-MRJob" class="headerlink" title="Implementation in MRJob"></a>Implementation in MRJob</h3><ul>
+<li><p>One step consists of a mapper, a combiner and a reducer</p>
+</li>
+<li><p>There are more methods you can override to write a one-step job</p>
+<img src="/2022/09/23/Hadoop-Code/MR_methods.png" class="" title="This is an image">
+</li>
+<li><p>For <code>in-mapper combining</code></p>
+<ul>
+<li>Initialise the “AssociativeArray” in <code>mapper_init()</code></li>
+<li>Update the “AssociativeArray” in <code>mapper()</code></li>
+<li>yield the result in <code>mapper_final()</code></li>
+</ul>
+</li>
+<li><p>example: word Count version2 implementation</p>
+<img src="/2022/09/23/Hadoop-Code/MR_demo.png" class="" title="This is an image">
+</li>
+</ul>
+<h2 id="Design-Pattern-2-Pairs-vs-Strips"><a href="#Design-Pattern-2-Pairs-vs-Strips" class="headerlink" title="Design Pattern 2: Pairs vs Strips"></a>Design Pattern 2: Pairs vs Strips</h2><h3 id="First-Try-“Pairs”-—-need-to-sort-n-2-keys"><a href="#First-Try-“Pairs”-—-need-to-sort-n-2-keys" class="headerlink" title="First Try: “Pairs” — need to sort n^2^ keys"></a>First Try: “Pairs” — need to sort n^2^ keys</h3><ul>
+<li>Each mapper takes a sentence<ul>
+<li>Generate all co-occurring term pairs</li>
+<li>For all pairs, emit (a, b) -&gt; count</li>
+</ul>
+</li>
+<li>Reducers sum up counts associated with these pairs</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class MAPPER</span><br><span class="line">	method MAP(docid a, doc d)</span><br><span class="line">		for all term w in doc d do</span><br><span class="line">			for all term u in Neighbors(w) do</span><br><span class="line">				EMIT(pair (w, u), count 1) // emit for each co-occurance</span><br><span class="line"></span><br><span class="line">class REDUCER</span><br><span class="line">	method REDUCER(pair p, counts [c1, c2, ...])</span><br><span class="line">		s &lt;- 0</span><br><span class="line">		for all count c in counts [c1, c2, ...] do</span><br><span class="line">			s &lt;- s + c</span><br><span class="line">		EMIT (pair p, count s) // sum co-occurence counts</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Analysis<ul>
+<li>adv: easy to implement, easy to understand</li>
+<li>Disadvantage: <ul>
+<li>TOO many pairs to suhffle around</li>
+<li>Not many opportunities for combiners to work</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Another-Try-“Stripes”-—-need-to-sort-n-keys"><a href="#Another-Try-“Stripes”-—-need-to-sort-n-keys" class="headerlink" title="Another Try: “Stripes” — need to sort n keys"></a>Another Try: “Stripes” — need to sort n keys</h3><ul>
+<li><p>Idea: group together pairs into associative array</p>
+<img src="/2022/09/23/Hadoop-Code/stripe1.png" class="" title="This is an image">
+</li>
+<li><p>Each mapper takes a<code>sentence</code></p>
+<ul>
+<li>Generate all co-occurring term pairs</li>
+<li>For each term, emit a-&gt; {b:count~b~, c:count~c~. ….}</li>
+</ul>
+</li>
+<li><p>Reducers perform element-wise sum of associative arrays</p>
+<img src="/2022/09/23/Hadoop-Code/stripe2.png" class="" title="This is an image">
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class MAPPER</span><br><span class="line">	method MAP(docid a, doc d)</span><br><span class="line">		for all term w in doc d do</span><br><span class="line">			H &lt;- new Associative Array</span><br><span class="line">			for all term u in Neighbours(w) do</span><br><span class="line">				H&#123;u&#125; &lt;- H&#123;u&#125; + 1</span><br><span class="line">			EMIT(Teem w, Stripe H) // w-&gt; H w -&gt; &#123;u: count, u: count &#125;</span><br><span class="line">				</span><br><span class="line"> </span><br><span class="line">class REDUCER</span><br><span class="line">	method REDUCE(term w, stripes [H1, H2, H3, ...])</span><br><span class="line">		H_f &lt;- new ASOOCIATIVARRAY</span><br><span class="line">		</span><br><span class="line">		for all strip H in stripes [H1, H2, H3, ...] do</span><br><span class="line">			SUM(H_f, H)</span><br><span class="line">		EMIT(term w, strip H_f) // element-wise sum</span><br></pre></td></tr></table></figure>
+<ul>
+<li>In this case, combiner can be the same as REDUCER</li>
+<li>Analysis:<ul>
+<li>Advantages<ul>
+<li>Far less sorting and shuffling pairs</li>
+<li>can make butter use of combiners</li>
+</ul>
+</li>
+<li>Disadvantage:<ul>
+<li>Underlying object more heavyweight</li>
+<li>fundamnental limitation in terms of size of event space</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="pairs-vs-Stripes"><a href="#pairs-vs-Stripes" class="headerlink" title="pairs vs Stripes"></a>pairs vs Stripes</h3><img src="/2022/09/23/Hadoop-Code/comparison.png" class="" title="This is an image">
+<h2 id="Design-Pattern3-order-Inversion"><a href="#Design-Pattern3-order-Inversion" class="headerlink" title="Design Pattern3: order Inversion"></a>Design Pattern3: order Inversion</h2><p>Relative Co-occrrence matrix construction</p>
+<script type="math/tex; mode=display">
+f(w_j | w_i) = \frac{N(w_i, w_j)}{\sum{N(w_i, w^`)}}</script><h3 id="f-w-j-w-i-“stripes”"><a href="#f-w-j-w-i-“stripes”" class="headerlink" title="f(w~j~|w~i~) “stripes”"></a>f(w~j~|w~i~) “stripes”</h3><p>In the reducer, the counts of all words that co-occur with the conditioning variable(w~i~) are available in the associative array</p>
+<img src="/2022/09/23/Hadoop-Code/3_1.png" class="" title="This is an image">
+<h3 id="f-w-j-w-i-“pairs”"><a href="#f-w-j-w-i-“pairs”" class="headerlink" title="f(w~j~|w~i~) “pairs”"></a>f(w~j~|w~i~) “pairs”</h3><p>The reducer receives the pair (w~i~, w~j~) and the count. Computing relative frequencies requires marginal counts, but the marginal cannot be computed until you <code>see all counts</code>.</p>
+<h4 id="solution1"><a href="#solution1" class="headerlink" title="solution1"></a>solution1</h4><p>Reducer can preserve state across multiple keys. <code>a -&gt; &#123;b1,: 3, b2: 12,...&#125;</code>is now buffered in the reducer side. This is basically building the associative array in the strips method.</p>
+<ul>
+<li><p>Problem 1: if reducer receive pairs not sorted, <strong>when</strong> can we compute the marginal?</p>
+<ul>
+<li>we must define the sort order of the pair, the keys are first sorted by the left word, then by the right word in the pair. In this way, we can detect if all pairs associated with the word we are conditioning on (w~i~) have been seen.</li>
+</ul>
+</li>
+<li><p>Problem 2: ((a, b1), {1, 1, 1, …}) and ((a, b2), {1, 1, 1, …}) may be assigned to different reducers</p>
+<ul>
+<li>We must define an appropriate partitioner. Default partitioner computed based on the whole key. What we want is that all pairs with the same left word are sent to the same reducer.</li>
+</ul>
+</li>
+<li><p>Problem 3: still suffer from the memory problem</p>
+<ul>
+<li><p>Reducer holds the sum of stripe in memory, rather than the stripe.</p>
+<img src="/2022/09/23/Hadoop-Code/3_2.png" class="" title="This is an image">
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Solution-2-—-order-Inversion"><a href="#Solution-2-—-order-Inversion" class="headerlink" title="Solution 2 — order Inversion"></a>Solution 2 — order Inversion</h4><ul>
+<li>The mapper:<ul>
+<li>additionally emits a “special” key of the form (w~i~, *)</li>
+<li>The value associated to the special key is one, that represents the contributtion of the word pair to the marginal</li>
+<li>Using combiners, these partial marginal counts will be aggredated before being sent to the reducers</li>
+</ul>
+</li>
+<li>The reducer:<ul>
+<li>make sure that the special key-value pairs are processed before any other key-value pairs where the left word is w~i~ <strong>(define sort order)</strong></li>
+<li>all pairs associated with the same word are sent to the same reducer <strong>(user partitioner)</strong></li>
+</ul>
+</li>
+<li>Example:</li>
+</ul>
+<p>​    <img src="/2022/09/23/Hadoop-Code/Order_inversion.png" class="" title="This is an image"></p>
+<h2 id="Design-Pattern4-Secondary-Sort"><a href="#Design-Pattern4-Secondary-Sort" class="headerlink" title="Design Pattern4: Secondary Sort"></a>Design Pattern4: Secondary Sort</h2><p>MapReduce sorts input to reducers by key. Values may be arbitrarily ordered.</p>
+<p>Example: k -&gt; (v1, r), (v3, r), (v4, r) (v8, r)</p>
+<ul>
+<li><p>Google’s MapReduce implementation provides built-in functionality</p>
+</li>
+<li><p>Hadoop not support this</p>
+</li>
+</ul>
+<p>Secondary Sort: sorting values associated with a key in the reduce phase, also called “value-to-key conversion”</p>
+<img src="/2022/09/23/Hadoop-Code/Sec_sort1.png" class="" title="This is an image">
+<img src="/2022/09/23/Hadoop-Code/Sec_sort2.png" class="" title="This is an image">
+<h3 id="Use-the-Value-to-key-Conversion-design-pattern"><a href="#Use-the-Value-to-key-Conversion-design-pattern" class="headerlink" title="Use the Value-to-key Conversion design pattern"></a>Use the Value-to-key Conversion design pattern</h3><ul>
+<li>Form a composite intermediate key, (K, V). In which, V is secondary key, K is called a natural key.</li>
+<li>Let the MapReduce execution framework do the sorting(rather than sorting in memory). Let the framework sort by using cluster nodes.</li>
+<li>Preserve state across mutiple key-value pairs to handle processing. Write your own partitioner, partition the mapper’s output by the natural key (Year-month)</li>
+<li><img src="/2022/09/23/Hadoop-Code/Sec_sort3.png" class="" title="This is an image">
+</li>
+</ul>
+<h3 id="secondary-sort-mechanism-explaination"><a href="#secondary-sort-mechanism-explaination" class="headerlink" title="secondary sort mechanism explaination"></a>secondary sort mechanism explaination</h3><img src="/2022/09/23/Hadoop-Code/SEC_sort.png" class="" title="SEC_sort">
+<ul>
+<li><p>(<a target="_blank" rel="noopener" href="https://blog.csdn.net/lzm1340458776/article/details/42875751">https://blog.csdn.net/lzm1340458776/article/details/42875751</a>)</p>
+</li>
+<li><p>First sort by <strong>key</strong> -&gt; partition -&gt; secondary sort by <strong>new key</strong>.</p>
+</li>
+<li>整个过程分为 Map phase(task) 和 Reduce phase(task), shuffle action exists in both tasks.</li>
+</ul>
+<h1 id="Examples-on-Partitioner-and-Comparator"><a href="#Examples-on-Partitioner-and-Comparator" class="headerlink" title="Examples on Partitioner and Comparator"></a>Examples on Partitioner and Comparator</h1><h2 id="In-hadoop-streaming"><a href="#In-hadoop-streaming" class="headerlink" title="In hadoop streaming"></a>In hadoop streaming</h2><ul>
+<li>Hadoop Partitioner class, <code>KeyFieldBasedPartitioner</code><ul>
+<li>allows the MapReduce framework to partition the map outputs based on certain key fields, not the whole keys.</li>
+<li>If no comparator class is used, then <strong>whole key fields</strong> (including the fields for partitioner) will be used to sort</li>
+<li><code>-D mapreduce.partition.keypartitioner.options=-k1,2</code></li>
+</ul>
+</li>
+<li>Hadoop Comparator class, <code>KeyFieldBasedComparator</code><ul>
+<li>This class procides a subset of features provideded by the Unix/GNU Sort</li>
+<li><code>mapreduce.partition.keycomparator.options=-k2,2nr</code></li>
+<li>defines which field can be used to compare</li>
+</ul>
+</li>
+</ul>
+<h2 id="Partition-and-comparator-in-mrjob"><a href="#Partition-and-comparator-in-mrjob" class="headerlink" title="Partition and comparator in mrjob"></a>Partition and comparator in mrjob</h2><p><strong>Input</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">11.14.2.3</span><br><span class="line">11.14.2.2</span><br><span class="line">11.12.1.2</span><br><span class="line">11.12.1.1</span><br><span class="line">11.11.4.1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>condition 1: partition the mapper output keys according to the first 2 fields</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mrjob.job <span class="keyword">import</span> MRJob</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TestPartitioner</span>(<span class="title class_ inherited__">MRJob</span>):</span><br><span class="line">		<span class="keyword">def</span> <span class="title function_">mapper</span>(<span class="params">self, _, line</span>):</span><br><span class="line">				<span class="keyword">yield</span> line,<span class="string">&#x27;&#x27;</span></span><br><span class="line">		<span class="keyword">def</span> <span class="title function_">reducer</span>(<span class="params">self, key, values</span>):</span><br><span class="line">      <span class="keyword">yield</span> key, <span class="string">&#x27;;&#x27;</span>.join(values)</span><br><span class="line">    </span><br><span class="line">    SORT_VALUES = <span class="literal">True</span></span><br><span class="line">		</span><br><span class="line">    JOBCONF = &#123; </span><br><span class="line">      <span class="string">&#x27;mapreduce.map.output.key.field.separator&#x27;</span>:<span class="string">&#x27;.&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;mapreduce.job.reduces&#x27;</span>:<span class="number">2</span>,</span><br><span class="line">      <span class="string">&#x27;mapreduce.partition.keypartitioner.options&#x27;</span>:<span class="string">&#x27;-k1,2&#x27;</span></span><br><span class="line">		&#125;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	TestPartitioner.run()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Condition2: <ul>
+<li>partition based on the first two fields</li>
+<li>and then first based on the first two fields and then based on the fourth field on descending order by numerically values</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mrjob.job <span class="keyword">import</span> MRJob</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PartitionerAndComparator</span>(<span class="title class_ inherited__">MRJob</span>):</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">mapper</span>(<span class="params">self, _, line</span>):</span><br><span class="line">    <span class="keyword">yield</span> line, <span class="string">&#x27;&#x27;</span></span><br><span class="line">    </span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">reducer</span>(<span class="params">self, key, vakues</span>):</span><br><span class="line">    <span class="keyword">yield</span> key, <span class="string">&#x27;;&#x27;</span>.join(values)</span><br><span class="line">    </span><br><span class="line">  SORT_VALUES = <span class="literal">True</span></span><br><span class="line">  </span><br><span class="line">  JOBCONF = &#123;</span><br><span class="line">    <span class="string">&#x27;mapreduce.map.output.key.field.separator&#x27;</span>:<span class="string">&#x27;.&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;mapreduce.job.reduces&#x27;</span>:<span class="number">2</span>,</span><br><span class="line">    <span class="string">&#x27;mapreduce.partition.keypartitioner.options&#x27;</span>:<span class="string">&#x27;-k1,2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;mapreduce.job.output.key.comparator.class&#x27;</span>:<span class="string">&#x27;org.apache.hadoop.mapreduce.lib.pa rtition.KeyFieldBasedComparator&#x27;</span>,</span><br><span class="line">		<span class="string">&#x27;mapreduce.partition.keycomparator.options&#x27;</span>:<span class="string">&#x27;-k1,2 -k4,4nr&#x27;</span> &#125;</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>: </span><br><span class="line">  PartitionerAndComparator.run()</span><br></pre></td></tr></table></figure>
+<h1 id="Application-Building-Inverted-Index"><a href="#Application-Building-Inverted-Index" class="headerlink" title="Application: Building Inverted Index"></a>Application: Building Inverted Index</h1><p>MapReduce in Real World: Seach Engine</p>
+<ul>
+<li>MapReduce: Index Construction</li>
+</ul>
+<img src="/2022/09/23/Hadoop-Code/Inverted_ind.png" class="" title="This is an image">
+<ul>
+<li>Term weight</li>
+</ul>
+<img src="/2022/09/23/Hadoop-Code/term_weight.png" class="" title="This is an image">
+<ul>
+<li><p>Simple approach</p>
+<ul>
+<li><strong>Mapper</strong>: each Map task is a document parser<ul>
+<li>Input: a stream of documents. E.g.. (1, long ago), (2, once open)</li>
+<li>Output: A stream of(term, [docid, tf]) tuples. E.g..(long, [1, 1]) (ago, [1.1])</li>
+</ul>
+</li>
+<li><strong>Reducer</strong>: Reducers convert streams of keys into streams of inverted lists<ul>
+<li>Input: (long, {[1,1], [127,2], [49,1], [23,3] …})</li>
+<li>The <code>reducer sorts the values for a key</code> and builds an inverted list<ul>
+<li>Compute TF and IDF in reducer</li>
+</ul>
+</li>
+<li>Output: (long, [(1, 0.5), (23, 0.2), (49, 0.3), (127,0.4), …])</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>The first Improvement: make Hadoop sort the docid, instead og doing it in reducers</p>
+<ul>
+<li>Design pattern: value-to-key conversion, secondary sort</li>
+<li>Mapper output a stream of ([term, docid], tf) tuples</li>
+<li>Note: must implement a partitioner on term</li>
+</ul>
+</li>
+<li><p>The second Improvement: to avoid buffering all postings associated with key</p>
+<ul>
+<li><p>Design pattern: store the DF at the front of posting list, but we don’t know the DF until we’ve seen all postings =&gt; Design pattern: order inversion</p>
+</li>
+<li><p><strong>Mapper</strong></p>
+<ul>
+<li>Emit “special” key-value pairs to keep track of DF</li>
+</ul>
+</li>
+<li><p><strong>Reducer</strong></p>
+<ul>
+<li><p>Make sure “special” key-value pairs come first: process them to determine DF</p>
+</li>
+<li><p>Note: must implement a partitioner on term</p>
+<img src="/2022/09/23/Hadoop-Code/DF_sec.png" class="" title="This is an image">
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Chained-MapReduce-Job-MRJob"><a href="#Chained-MapReduce-Job-MRJob" class="headerlink" title="Chained MapReduce Job(MRJob)"></a>Chained MapReduce Job(MRJob)</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MRMistUsedWord</span>(<span class="title class_ inherited__">MRJob</span>):</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">mapper_get_words</span>(<span class="params">self, _, line</span>):</span><br><span class="line">    	<span class="comment"># yield each word in the line</span></span><br><span class="line">      <span class="keyword">for</span> word <span class="keyword">in</span> WORD_RE.findall(line):</span><br><span class="line">        <span class="keyword">yield</span> (word.lower(), <span class="number">1</span>)</span><br><span class="line">        </span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">combiner_count_words</span>(<span class="params">self, word, counts</span>):</span><br><span class="line">    	<span class="comment"># sum the words we&#x27;ve seen so far</span></span><br><span class="line">      <span class="keyword">yield</span> (word, <span class="built_in">sum</span>(counts))</span><br><span class="line">      </span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">reducer_count_words</span>(<span class="params">self, word, counts</span>):</span><br><span class="line">    	<span class="comment"># send all (num_occurences, word) pairs to the same reducer</span></span><br><span class="line">    	<span class="keyword">yield</span> <span class="literal">None</span>, (<span class="built_in">sum</span>(counts), word)</span><br><span class="line">  </span><br><span class="line">  <span class="comment"># discard the key; it is just None</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">reducer_find_max_word</span>(<span class="params">self,_, word_count_pairs</span>):</span><br><span class="line">    <span class="comment"># each item of word_count_pairs is (count, word)</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="built_in">max</span>(word_count_pairs)</span><br><span class="line">    </span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">steps</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">      MRStep(mapper=self.mapper_get_words,</span><br><span class="line">            combiner=self.combiner_count_words,</span><br><span class="line">            reducer=self.reducer_count_words),</span><br><span class="line">      MRStep(reducer=self.reducer_find_max_word)</span><br><span class="line">    ]</span><br><span class="line">      </span><br><span class="line">  	</span><br><span class="line"> 	</span><br></pre></td></tr></table></figure>
+<h1 id="Practice"><a href="#Practice" class="headerlink" title="Practice"></a>Practice</h1><h2 id="Question1"><a href="#Question1" class="headerlink" title="Question1"></a>Question1</h2><img src="/2022/09/23/Hadoop-Code/prac1.png" class="" title="This is an image">
+<ul>
+<li><p>solution1: standard</p>
+<ul>
+<li><p>Mapper:</p>
+<ul>
+<li>Input(user u, List of Friends [f1, f2, …])</li>
+<li>Map(): for each friend fi, emit (<u, f~i~> [f1, f2, …])<ul>
+<li>Need to generate the pair <u, f~i~> in a specific order to avoid repentance  </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>reducer</p>
+<ul>
+<li>Input(user pair, list of friends lists[])</li>
+<li>Get the <strong>intersecition</strong> from all friends lists</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Solution2: 逆向思维</p>
+<ul>
+<li>Mapper:<ul>
+<li>Input(user u, List of Friends [f1, f2, …])</li>
+<li>Map(): do combination for the List [f1, f2, …]<ul>
+<li>Example: List [f1, f2, f3] <ul>
+<li>emit:<ul>
+<li>(f1, f2), u </li>
+<li>(f2, f3), u </li>
+<li>(f1, f3), u </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Reducer<ul>
+<li>Input(user pair, common friends)</li>
+<li>Emit user pair, [cf1, cf2, …] (cf == common friends)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Question2"><a href="#Question2" class="headerlink" title="Question2"></a>Question2</h2><img src="/2022/09/23/Hadoop-Code/prac2.png" class="" title="This is an image">
+<ul>
+<li>Mapper<ul>
+<li>Input (3, [1, 2]), (1, [2, 3])</li>
+<li>Intermediate: (1, [3]), (2, [3]), (2, [1]), (3, [1]). (reverse direction)</li>
+<li>Output: (<1, 3>, [3]), (<2, 3>, [3]), (<2, 1>, [1]), (<3, 1>, [1]).<ul>
+<li>Copy node_ids from value to key so that Hadoop can help to compare</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------Ending<i class="fa fa-paw"></i>Thanks-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/09/18/Distributed-System/" rel="prev" title="Distributed System">
+      <i class="fa fa-chevron-left"></i> Distributed System
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/09/25/Frontend-HTML-CSS-JS/" rel="next" title="Frontend-HTML,CSS,JS">
+      Frontend-HTML,CSS,JS <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hadoop-Streaming"><span class="nav-number">1.</span> <span class="nav-text">Hadoop Streaming</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MRJob"><span class="nav-number">2.</span> <span class="nav-text">MRJob</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hadoop-File-System-Shell"><span class="nav-number">3.</span> <span class="nav-text">Hadoop File System Shell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MapReduce-algorithm-Design"><span class="nav-number">4.</span> <span class="nav-text">MapReduce algorithm Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Design-Pattern-1-Combiner-In-mapper-Combining"><span class="nav-number">4.1.</span> <span class="nav-text">Design Pattern 1: Combiner&#x2F;In-mapper Combining</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Local-aggregation"><span class="nav-number">4.1.1.</span> <span class="nav-text">Local aggregation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Word-Count-Version1"><span class="nav-number">4.1.1.1.</span> <span class="nav-text">Word Count Version1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Word-Count-Version-2-In-mapper-combining"><span class="nav-number">4.1.1.2.</span> <span class="nav-text">Word Count Version 2 - In-mapper combining</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Combiner-Design"><span class="nav-number">4.1.2.</span> <span class="nav-text">Combiner Design</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Computing-the-Mean-version-1"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">Computing the Mean: version 1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Computing-the-Mean-version2"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">Computing the Mean: version2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Computing-the-Mean-version3"><span class="nav-number">4.1.2.3.</span> <span class="nav-text">Computing the Mean: version3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Computing-the-Mean-version4-in-mapper-combining"><span class="nav-number">4.1.2.4.</span> <span class="nav-text">Computing the Mean: version4 -  in-mapper combining</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Implementation-in-MRJob"><span class="nav-number">4.1.3.</span> <span class="nav-text">Implementation in MRJob</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Design-Pattern-2-Pairs-vs-Strips"><span class="nav-number">4.2.</span> <span class="nav-text">Design Pattern 2: Pairs vs Strips</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#First-Try-%E2%80%9CPairs%E2%80%9D-%E2%80%94-need-to-sort-n-2-keys"><span class="nav-number">4.2.1.</span> <span class="nav-text">First Try: “Pairs” — need to sort n^2^ keys</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Another-Try-%E2%80%9CStripes%E2%80%9D-%E2%80%94-need-to-sort-n-keys"><span class="nav-number">4.2.2.</span> <span class="nav-text">Another Try: “Stripes” — need to sort n keys</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pairs-vs-Stripes"><span class="nav-number">4.2.3.</span> <span class="nav-text">pairs vs Stripes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Design-Pattern3-order-Inversion"><span class="nav-number">4.3.</span> <span class="nav-text">Design Pattern3: order Inversion</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#f-w-j-w-i-%E2%80%9Cstripes%E2%80%9D"><span class="nav-number">4.3.1.</span> <span class="nav-text">f(w~j~|w~i~) “stripes”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#f-w-j-w-i-%E2%80%9Cpairs%E2%80%9D"><span class="nav-number">4.3.2.</span> <span class="nav-text">f(w~j~|w~i~) “pairs”</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#solution1"><span class="nav-number">4.3.2.1.</span> <span class="nav-text">solution1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Solution-2-%E2%80%94-order-Inversion"><span class="nav-number">4.3.2.2.</span> <span class="nav-text">Solution 2 — order Inversion</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Design-Pattern4-Secondary-Sort"><span class="nav-number">4.4.</span> <span class="nav-text">Design Pattern4: Secondary Sort</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Use-the-Value-to-key-Conversion-design-pattern"><span class="nav-number">4.4.1.</span> <span class="nav-text">Use the Value-to-key Conversion design pattern</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#secondary-sort-mechanism-explaination"><span class="nav-number">4.4.2.</span> <span class="nav-text">secondary sort mechanism explaination</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Examples-on-Partitioner-and-Comparator"><span class="nav-number">5.</span> <span class="nav-text">Examples on Partitioner and Comparator</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#In-hadoop-streaming"><span class="nav-number">5.1.</span> <span class="nav-text">In hadoop streaming</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Partition-and-comparator-in-mrjob"><span class="nav-number">5.2.</span> <span class="nav-text">Partition and comparator in mrjob</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Application-Building-Inverted-Index"><span class="nav-number">6.</span> <span class="nav-text">Application: Building Inverted Index</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chained-MapReduce-Job-MRJob"><span class="nav-number">7.</span> <span class="nav-text">Chained MapReduce Job(MRJob)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Practice"><span class="nav-number">8.</span> <span class="nav-text">Practice</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Question1"><span class="nav-number">8.1.</span> <span class="nav-text">Question1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question2"><span class="nav-number">8.2.</span> <span class="nav-text">Question2</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <!--
+  <p class="site-author-name" itemprop="name">Haoyu Li</p>
+  -->
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Haoyu Li</span>
+</div>
+
+<div class="powered-by">
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <i class="fa fa-user-md"></i>
+    <span id="busuanzi_container_site_uv">
+        本站访客数:<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">
+        本站访问量<span id="busuanzi_value_site_pv"></span>
+    </span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+</body>
+</html>

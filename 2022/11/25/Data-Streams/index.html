@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:300,300italic,400,400italic,700,700italic|Open Sans:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"haoyulll.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Data Streams">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Data Streams">
+<meta property="og:url" content="https://haoyulll.github.io/2022/11/25/Data-Streams/index.html">
+<meta property="og:site_name" content="Haoyu Li&#39;s note">
+<meta property="og:description" content="Data Streams">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://haoyulll.github.io/2022/11/25/Data-Streams/1.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/11/25/Data-Streams/2.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/11/25/Data-Streams/3.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/11/25/Data-Streams/4.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/11/25/Data-Streams/5.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/11/25/Data-Streams/6.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/11/25/Data-Streams/7.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/11/25/Data-Streams/8.png">
+<meta property="article:published_time" content="2022-11-25T01:29:07.000Z">
+<meta property="article:modified_time" content="2022-11-27T04:12:09.200Z">
+<meta property="article:author" content="Haoyu Li">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://haoyulll.github.io/2022/11/25/Data-Streams/1.png">
+
+<link rel="canonical" href="https://haoyulll.github.io/2022/11/25/Data-Streams/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Data Streams | Haoyu Li's note</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Haoyulll" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Haoyu Li's note</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://haoyulll.github.io/2022/11/25/Data-Streams/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Haoyu Li">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Haoyu Li's note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Data Streams
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-11-25 12:29:07" itemprop="dateCreated datePublished" datetime="2022-11-25T12:29:07+11:00">2022-11-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-11-27 15:12:09" itemprop="dateModified" datetime="2022-11-27T15:12:09+11:00">2022-11-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Data-Streams"><a href="#Data-Streams" class="headerlink" title="Data Streams"></a>Data Streams</h1><span id="more"></span>
+<ul>
+<li><p>DBMS:</p>
+<ul>
+<li>Data stored in finite, persistent data sets</li>
+<li>stored sets of relatively static records</li>
+<li>Good for app that require persistent data storage and complex querying</li>
+</ul>
+</li>
+<li><p>DSMS(Data Streams):</p>
+<ul>
+<li>Distributed, continuous, unbounded, rapid, (real time data)</li>
+<li>support on-line analysis of rapidly changing data streams</li>
+<li></li>
+</ul>
+</li>
+<li><p>Comparison of DBMS and DSMS</p>
+<ul>
+<li>DBMS: data goes through Disk</li>
+<li>DSMS: Data only goes through memory.</li>
+<li><img src="/2022/11/25/Data-Streams/1.png" class="" title="This is an image">
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Sampling-Data-Streams"><a href="#Sampling-Data-Streams" class="headerlink" title="Sampling Data Streams"></a>Sampling Data Streams</h2><p>Since we cannot store the entire stream, we can try to store a sample</p>
+<p>Two different problems:</p>
+<ul>
+<li>Sample a <strong>fixed proportion of elements</strong> in the stream (say 1 in 10)<ul>
+<li>As the stream grows the sample also gets bigger</li>
+</ul>
+</li>
+<li>Maintain a <strong>random sample of fixed size</strong> over a potentially infinite stream<ul>
+<li>As the stream grows, the sample is of fixed size.</li>
+<li>At any “time” t we would like a random sample of s elements<ul>
+<li>What is the property of the sample we want to maintain?<ul>
+<li>For all time steps t, each of t elements seen so far has equal probability of being sampled</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Sampling-a-fixed-proportion-等比例"><a href="#Sampling-a-fixed-proportion-等比例" class="headerlink" title="Sampling a fixed proportion 等比例"></a>Sampling a fixed proportion 等比例</h2><p><strong>Question</strong>: How often did a user run the same query in a single days</p>
+<p><strong>Same as</strong>: What fraction of queries by an average search engine user are duplicates</p>
+<ul>
+<li>Suppose each user issues x queries once and d queries twice (total: x + 2d) queries</li>
+<li>x + d unque queries</li>
+</ul>
+<p><strong>Correct Answer</strong>: d/(x+d)</p>
+<p><strong>Proposed solution</strong>: </p>
+<img src="/2022/11/25/Data-Streams/2.png" class="" title="This is an image">
+<p><strong>Distribution of Correct answer and proposed solution is not the same</strong>.</p>
+<p><strong>Solution of doing correct sampling:</strong></p>
+<ul>
+<li>Pick 1/10th of users and take all their searches in the sample</li>
+<li>Use a hash function that hashes the username or user id uniformly into 10 buckets<ul>
+<li>We hash each username to one of ten buckets, 0 through 9</li>
+<li>if the user hashes to bucked 0, then accept this search query for the sample. Discard other buckets</li>
+</ul>
+</li>
+</ul>
+<h3 id="Generalized-Problem-and-Solution"><a href="#Generalized-Problem-and-Solution" class="headerlink" title="Generalized Problem and Solution"></a>Generalized Problem and Solution</h3><ul>
+<li><p><strong>Problem</strong>: Give a data stream, take a sample of fraction a/b</p>
+</li>
+<li><p><strong>Stream of tuples with keys</strong>:</p>
+<ul>
+<li><p>Key is some subset of each tuple’s components</p>
+</li>
+<li><p>Choices of key depends on application</p>
+</li>
+<li><p>To get a sample of a/b fraction of the stream</p>
+<ul>
+<li>Hash each tuple’s key uniformly into b buckets</li>
+<li>Pick the tuple of its hash value is at most a</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Sample-Operator-in-Spark"><a href="#Sample-Operator-in-Spark" class="headerlink" title="Sample Operator in Spark"></a>Sample Operator in Spark</h3><p><code>Sample(withReplacement, fraction, seed)</code></p>
+<ul>
+<li>Return a sampled subset of this RDD</li>
+<li>withReplacement: can elements be sampled multiple times</li>
+<li>fraction: expected size of the sample as a fraction of this RDD’s size without replacement<ul>
+<li><strong>This is not guaranteed to provide exactluy the fraction specified of the total count of the given</strong></li>
+<li>Because we are using hashing techniques</li>
+</ul>
+</li>
+</ul>
+<h2 id="Maintaining-a-Fixed-size-Sample"><a href="#Maintaining-a-Fixed-size-Sample" class="headerlink" title="Maintaining a Fixed-size Sample"></a>Maintaining a Fixed-size Sample</h2><h3 id="Algorithm-Reservoir-Sampling"><a href="#Algorithm-Reservoir-Sampling" class="headerlink" title="Algorithm (Reservoir Sampling)"></a>Algorithm (Reservoir Sampling)</h3><p><strong>probability is calculated by hash table</strong></p>
+<ul>
+<li>Store all the first s element of the stream to S</li>
+<li>Suppose we have seen n-1 elements, and now the nth element arrives (n &gt; s)<ul>
+<li>With probability <code>s/n</code> (using hash table to calculate this one), keep the nth element, else discard it</li>
+<li>If we picked the nth element then it replaced one of the s elements in the sample S, picked uniformly/at random</li>
+</ul>
+</li>
+</ul>
+<p><strong>Claim</strong></p>
+<p>The algorithm maintains a sample S with the desired property</p>
+<ul>
+<li>After n elements, the sample contains each element seen so far with probability s/n</li>
+</ul>
+<h3 id="takeSample-Operator-In-Spark"><a href="#takeSample-Operator-In-Spark" class="headerlink" title="takeSample Operator In Spark"></a>takeSample Operator In Spark</h3><p><code>takeSample(withReplacement, num, seed=None)</code></p>
+<ul>
+<li>Return a fixed-size sampled subset of this RDD</li>
+<li>withReplacement: can elements be sampled multiple times</li>
+<li>Num: sample size</li>
+<li>This method should only be used if the resulting array is expected to be small</li>
+</ul>
+<h1 id="Query-streams"><a href="#Query-streams" class="headerlink" title="Query streams"></a>Query streams</h1><h2 id="Sliding-windows"><a href="#Sliding-windows" class="headerlink" title="Sliding windows"></a>Sliding windows</h2><ul>
+<li>window of length N - the N most recent element received</li>
+<li>Interesting case: N is so large that the data cannot be stored in memory, or even on disk</li>
+<li>Amazon example:<ul>
+<li>For every product X we keep 0/1 stream of whether that product was sold in the n-th transaction</li>
+<li>We want answer queries, how many times have we sold X in the last <strong>K</strong> sales.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Counting-Bits"><a href="#Counting-Bits" class="headerlink" title="Counting Bits"></a>Counting Bits</h2><p><strong>Problem</strong>:</p>
+<ul>
+<li>Given a stream of 0s and 1s</li>
+<li>Be prepared to answer queries of the form: <strong>How many 1s are in the last k bits? where k&lt;=N</strong>.</li>
+</ul>
+<p><strong>1.Naive Solution</strong>:</p>
+<ul>
+<li>Store the most recent N bits<ul>
+<li>When new bit comes in, discard the N+1 bit</li>
+</ul>
+</li>
+</ul>
+<p><strong>2. Simple Solution</strong>:</p>
+<ul>
+<li>Uniformity Assumption:<ul>
+<li>Maintain 2 counters:<ul>
+<li>S:number of 1s from the beginning of the stream</li>
+<li>Z:number of 0s from the beginning of the stream</li>
+</ul>
+</li>
+<li>How many 1s are in the last N bits? N*(S/S+Z)</li>
+</ul>
+</li>
+</ul>
+<p><strong>3. Solution: DGIM</strong></p>
+<ul>
+<li><p>If N = 2^16 (64 KB), log(log N) = log(16) = 4</p>
+<ul>
+<li>region size is <code>log(N)</code></li>
+</ul>
+</li>
+<li><p>Solution gives approximate answer, error is never larger than 50%</p>
+</li>
+<li>there is tradeoff between space and accuracy</li>
+</ul>
+<p><strong>4. Solution: Fixup DGIM</strong></p>
+<p>Instead of summarising fix-length blocks, summarize blocks with specific number of 1s</p>
+<p>5.Let the block sizes(number of 1s) increase exponentially</p>
+<p>When there are few 1s in the window, block sizes stay small, so errors are small</p>
+<h2 id="DGIM-Timestamps"><a href="#DGIM-Timestamps" class="headerlink" title="DGIM: Timestamps"></a>DGIM: Timestamps</h2><p>Record timestamps modulo N (the window size), so we can represent any relevant timestamp in O(log2N) bits</p>
+<ul>
+<li>given the windows size 40(N), timestamp 123 will be recorded as 2</li>
+</ul>
+<h2 id="DGIM-Buckets"><a href="#DGIM-Buckets" class="headerlink" title="DGIM: Buckets"></a>DGIM: Buckets</h2><p>Representing a Stream by Buckets</p>
+<ul>
+<li>The right end of a bucket is always a position with a 1</li>
+<li>Every position with a 1 in some bucket</li>
+<li>Either one or two buckets with the same power-of-2 number of 1s</li>
+<li>Buckets do not have overlap in timestamps</li>
+<li>Buckets are sorted by size</li>
+<li>Buckets disappear when their end-time is &gt; N time units in the past.</li>
+</ul>
+<img src="/2022/11/25/Data-Streams/3.png" class="" title="This is an image">
+<h1 id="Filtering-Data-Streams"><a href="#Filtering-Data-Streams" class="headerlink" title="Filtering Data Streams"></a>Filtering Data Streams</h1><h2 id="First-Cut-Solution"><a href="#First-Cut-Solution" class="headerlink" title="First Cut Solution"></a>First Cut Solution</h2><ul>
+<li>Given a set of keys S that we want to filter</li>
+<li>Create <strong>a bit array B</strong> of n bits, initially all <strong>0s</strong></li>
+<li>Choose a hash function h with range [0, n)</li>
+<li>Hash each member of s in S to onoe of n buckets, and set that bit to 1. B[h(s)] = 1</li>
+<li>Output value<ul>
+<li><strong>Output a if B[h(a)] == 1</strong></li>
+</ul>
+</li>
+<li>Create <strong>false positives</strong> but <strong>no false negatives</strong><ul>
+<li>If the item is in S we surely output it, if not we may still output it</li>
+</ul>
+</li>
+</ul>
+<h2 id="Throwing-Darts"><a href="#Throwing-Darts" class="headerlink" title="Throwing Darts"></a>Throwing Darts</h2><p>Targets = bit/buckets -&gt; n</p>
+<p>Darts = hash value of items -&gt; m</p>
+<p>Question: what is the probability that a target gets at least one dart ?</p>
+<img src="/2022/11/25/Data-Streams/4.png" class="" title="This is an image">
+<img src="/2022/11/25/Data-Streams/5.png" class="" title="This is an image">
+<h2 id="Bloom-Filter"><a href="#Bloom-Filter" class="headerlink" title="Bloom Filter"></a>Bloom Filter</h2><img src="/2022/11/25/Data-Streams/6.png" class="" title="This is an image">
+<p>still have false positive</p>
+<img src="/2022/11/25/Data-Streams/7.png" class="" title="This is an image">
+<p>Bllom filters guarantee no false negatives, and use limited memory</p>
+<h3 id="Handling-Deletions"><a href="#Handling-Deletions" class="headerlink" title="Handling Deletions"></a>Handling Deletions</h3><p>need to use counting bloom filters to track insertions/deletions</p>
+<img src="/2022/11/25/Data-Streams/8.png" class="" title="This is an image">
+<h1 id="Finding-Frequent-Elements"><a href="#Finding-Frequent-Elements" class="headerlink" title="Finding Frequent Elements"></a>Finding Frequent Elements</h1><h2 id="Boyer-Moore-Voting-Algorithm"><a href="#Boyer-Moore-Voting-Algorithm" class="headerlink" title="Boyer-Moore Voting Algorithm"></a>Boyer-Moore Voting Algorithm</h2><p>O(n) time and O(1) space</p>
+<p>2 steps</p>
+<h2 id="Heavy-Hitters"><a href="#Heavy-Hitters" class="headerlink" title="Heavy Hitters"></a>Heavy Hitters</h2><p>BM is a special case when k = 2</p>
+<p>A more general problem: find all elements with counts &gt; n/k (k &gt;= 2)</p>
+<ul>
+<li>There can be at most k-1 such values; and there might be none.</li>
+</ul>
+<h2 id="Misra-Gries-Algorithm"><a href="#Misra-Gries-Algorithm" class="headerlink" title="Misra-Gries Algorithm"></a>Misra-Gries Algorithm</h2>
+    </div>
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------Ending<i class="fa fa-paw"></i>Thanks-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/19/finding-similar-items/" rel="prev" title="finding_similar_items">
+      <i class="fa fa-chevron-left"></i> finding_similar_items
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Data-Streams"><span class="nav-number">1.</span> <span class="nav-text">Data Streams</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sampling-Data-Streams"><span class="nav-number">1.1.</span> <span class="nav-text">Sampling Data Streams</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sampling-a-fixed-proportion-%E7%AD%89%E6%AF%94%E4%BE%8B"><span class="nav-number">1.2.</span> <span class="nav-text">Sampling a fixed proportion 等比例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Generalized-Problem-and-Solution"><span class="nav-number">1.2.1.</span> <span class="nav-text">Generalized Problem and Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sample-Operator-in-Spark"><span class="nav-number">1.2.2.</span> <span class="nav-text">Sample Operator in Spark</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maintaining-a-Fixed-size-Sample"><span class="nav-number">1.3.</span> <span class="nav-text">Maintaining a Fixed-size Sample</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Algorithm-Reservoir-Sampling"><span class="nav-number">1.3.1.</span> <span class="nav-text">Algorithm (Reservoir Sampling)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#takeSample-Operator-In-Spark"><span class="nav-number">1.3.2.</span> <span class="nav-text">takeSample Operator In Spark</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Query-streams"><span class="nav-number">2.</span> <span class="nav-text">Query streams</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sliding-windows"><span class="nav-number">2.1.</span> <span class="nav-text">Sliding windows</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Counting-Bits"><span class="nav-number">2.2.</span> <span class="nav-text">Counting Bits</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DGIM-Timestamps"><span class="nav-number">2.3.</span> <span class="nav-text">DGIM: Timestamps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DGIM-Buckets"><span class="nav-number">2.4.</span> <span class="nav-text">DGIM: Buckets</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Filtering-Data-Streams"><span class="nav-number">3.</span> <span class="nav-text">Filtering Data Streams</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#First-Cut-Solution"><span class="nav-number">3.1.</span> <span class="nav-text">First Cut Solution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Throwing-Darts"><span class="nav-number">3.2.</span> <span class="nav-text">Throwing Darts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bloom-Filter"><span class="nav-number">3.3.</span> <span class="nav-text">Bloom Filter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Handling-Deletions"><span class="nav-number">3.3.1.</span> <span class="nav-text">Handling Deletions</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Finding-Frequent-Elements"><span class="nav-number">4.</span> <span class="nav-text">Finding Frequent Elements</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Boyer-Moore-Voting-Algorithm"><span class="nav-number">4.1.</span> <span class="nav-text">Boyer-Moore Voting Algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Heavy-Hitters"><span class="nav-number">4.2.</span> <span class="nav-text">Heavy Hitters</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Misra-Gries-Algorithm"><span class="nav-number">4.3.</span> <span class="nav-text">Misra-Gries Algorithm</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <!--
+  <p class="site-author-name" itemprop="name">Haoyu Li</p>
+  -->
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Haoyu Li</span>
+</div>
+
+<div class="powered-by">
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <i class="fa fa-user-md"></i>
+    <span id="busuanzi_container_site_uv">
+        本站访客数:<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">
+        本站访问量<span id="busuanzi_value_site_pv"></span>
+    </span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+</body>
+</html>

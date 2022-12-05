@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:300,300italic,400,400italic,700,700italic|Open Sans:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"haoyulll.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Spark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark">
+<meta property="og:url" content="https://haoyulll.github.io/2022/10/25/Spark/index.html">
+<meta property="og:site_name" content="Haoyu Li&#39;s note">
+<meta property="og:description" content="Spark">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/MR_drawback.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/GoalSpark.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/trans.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/action.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/linage.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/k-v.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/pair-1.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/pair-2.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/pair-act1.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/pracs.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/wc_spark.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/Execution.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/map_flatmap.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/standalone.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/error.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/dataframe_exp.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/spark_sql.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/graph_spark.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/triplet.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/graph_operator.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/Structural_opr.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/10/25/Spark/SSSP.png">
+<meta property="article:published_time" content="2022-10-25T08:27:52.000Z">
+<meta property="article:modified_time" content="2022-11-25T01:23:21.956Z">
+<meta property="article:author" content="Haoyu Li">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://haoyulll.github.io/2022/10/25/Spark/MR_drawback.png">
+
+<link rel="canonical" href="https://haoyulll.github.io/2022/10/25/Spark/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Spark | Haoyu Li's note</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Haoyulll" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Haoyu Li's note</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://haoyulll.github.io/2022/10/25/Spark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Haoyu Li">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Haoyu Li's note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spark
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-10-25 19:27:52" itemprop="dateCreated datePublished" datetime="2022-10-25T19:27:52+11:00">2022-10-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-11-25 12:23:21" itemprop="dateModified" datetime="2022-11-25T12:23:21+11:00">2022-11-25</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Spark</p>
+<span id="more"></span>
+<h1 id="part1-Spark-intro"><a href="#part1-Spark-intro" class="headerlink" title="part1 Spark intro"></a>part1 Spark intro</h1><h2 id="Recall"><a href="#Recall" class="headerlink" title="Recall"></a>Recall</h2><p>Previously, we introduced MAP Reduce.</p>
+<ul>
+<li>MapReduce simplified big data analysis on large, unreliable, clusters. It is great at on-pass computation.</li>
+<li>Users’ requirement trend<ul>
+<li>More complex, multi-pass analytics</li>
+<li>More interative ad-hoc queries</li>
+<li>More real-time stream processing</li>
+</ul>
+</li>
+<li><p>However: dfs have high through put but low latency</p>
+</li>
+<li><p>All 3 need faster data sharing across parallel jobs</p>
+</li>
+<li><img src="/2022/10/25/Spark/MR_drawback.png" class="" title="This is an image">
+</li>
+</ul>
+<h2 id="Goals-of-Spark"><a href="#Goals-of-Spark" class="headerlink" title="Goals of Spark"></a>Goals of Spark</h2><ul>
+<li><img src="/2022/10/25/Spark/GoalSpark.png" class="" title="This is an image"></li>
+<li>Improve efficiency through:<ul>
+<li>In-memory computing primitives</li>
+<li>General computation graphs</li>
+</ul>
+</li>
+<li>Fast and expressive cluster computing system interoperable with Apache Hadoop</li>
+<li>Improve usability through:<ul>
+<li>Rich APIs in Scala, Java, Python</li>
+<li>Interactive shell</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ease-of-Use"><a href="#Ease-of-Use" class="headerlink" title="Ease of Use"></a>Ease of Use</h2><ul>
+<li>Spark achieves simplicity by providing a fundamental abstraction of a simple logical data structure called a Resilient Disrtibuted Dataset.</li>
+<li>By providing a set of transformations and actions as operations, Spark offers a simple programming model that you can use to build big data applications in familiar languages.</li>
+</ul>
+<h2 id="wordcount-example"><a href="#wordcount-example" class="headerlink" title="wordcount example"></a>wordcount example</h2><ul>
+<li>python word count</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## Create RDD source is from hdfs</span></span><br><span class="line"><span class="comment">## split the file into 4 partitions in memory</span></span><br><span class="line"><span class="comment">## url can be local stored file</span></span><br><span class="line">textfile = sc.textFile(<span class="string">&quot;hdfs://...&quot;</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">words = textfile.flatMap(<span class="keyword">lambda</span> line: line.split(<span class="string">&quot; &quot;</span>))</span><br><span class="line">pairs = words.<span class="built_in">map</span>(<span class="keyword">lambda</span> word: (word, <span class="number">1</span>))</span><br><span class="line">count = pairs.reduceByKey(<span class="keyword">lambda</span> a, b: a + b)</span><br><span class="line">count.collect()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>scala</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> file = sc.textFile(<span class="string">&quot;url&quot;</span>)</span><br><span class="line"><span class="keyword">var</span> counts = file.flatMap(line =&gt; line.split(<span class="string">&quot; &quot;</span>))</span><br><span class="line">		.map(word =&gt; (word,<span class="number">1</span>))</span><br><span class="line">		.reduceByKey(_ + _)</span><br><span class="line"></span><br><span class="line">counts.saveAsTextFile(<span class="string">&quot;url&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="part2-RDD-Resillient-Distributed-Dataset"><a href="#part2-RDD-Resillient-Distributed-Dataset" class="headerlink" title="part2 RDD: Resillient Distributed Dataset"></a>part2 RDD: Resillient Distributed Dataset</h1><ul>
+<li><p>Resilient Distributed Datasets:</p>
+<ul>
+<li>RDD is a distributed memory abstraction that lets programmers perform in-memory computations on large cluters in a <strong>fault-tolerent</strong> manner.</li>
+<li>Data will be stored in RDD in memory in a distributed manner</li>
+</ul>
+</li>
+<li><p>Resillient</p>
+<ul>
+<li>Fault-tolerant, is able to recompute missing or damaged partitions due to node faulures.</li>
+</ul>
+</li>
+<li><p>Dataset:</p>
+<ul>
+<li>A collection of partitioned elements.</li>
+</ul>
+</li>
+<li><p>RDD is the primary data abstraction in Apache Spark and the core of Spark. It enables operations on collection of elements in parallel.</p>
+</li>
+<li><p>RDD Operations</p>
+<ul>
+<li>Transformation: returns a new RDD<ul>
+<li><img src="/2022/10/25/Spark/trans.png" class="" title="This is an image"></li>
+</ul>
+</li>
+<li>Action: evaluates and returns a new value<ul>
+<li><img src="/2022/10/25/Spark/action.png" class="" title="This is an image"></li>
+<li>Action function is called on a RDD object, all the data processing queries are computed at that time and result value is returned.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Example:</p>
+<ul>
+<li>Filter error with HDFS from log</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## base RDD, obtained from a file on HDFS</span></span><br><span class="line">lines = sc.textFile(<span class="string">&quot;url&quot;</span>)</span><br><span class="line"></span><br><span class="line">errors = lines.<span class="built_in">filter</span>(<span class="keyword">lambda</span> x: x.startswith(<span class="string">&quot;Error&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">## persist data in memory</span></span><br><span class="line">errors.persist()</span><br><span class="line"></span><br><span class="line">errors.count()</span><br><span class="line"></span><br><span class="line">errors.<span class="built_in">filter</span>(<span class="keyword">lambda</span> x: <span class="string">&quot;HDFS&quot;</span> <span class="keyword">in</span> x).<span class="built_in">map</span>(<span class="keyword">lambda</span> x:x.split(<span class="string">&#x27;\t&#x27;</span>)[<span class="number">3</span>]).collect()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>Lineage Graph</strong></p>
+<ul>
+<li><img src="/2022/10/25/Spark/linage.png" class="" title="This is an image">
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Part-3-Programming-with-RDD"><a href="#Part-3-Programming-with-RDD" class="headerlink" title="Part 3: Programming with RDD"></a>Part 3: Programming with RDD</h1><h2 id="SparkContext"><a href="#SparkContext" class="headerlink" title="SparkContext"></a>SparkContext</h2><ul>
+<li>SparkContect is the entry point to Spark for a Spark application.</li>
+<li>A spark context is essentially a client of Spark’s execution environment environment and acts as the master of your Spark application.</li>
+<li>In the Spark shell, a special interpreter-aware SparkContext is already created for you , in the variable called <code>sc</code>.</li>
+</ul>
+<h2 id="Spark-Key-Value-RDDs"><a href="#Spark-Key-Value-RDDs" class="headerlink" title="Spark Key-Value RDDs"></a>Spark Key-Value RDDs</h2><ul>
+<li><img src="/2022/10/25/Spark/k-v.png" class="" title="This is an image">
+<ul>
+<li>These operations are run globally, which means among all the partitions.</li>
+</ul>
+</li>
+<li><img src="/2022/10/25/Spark/pair-1.png" class="" title="This is an image"></li>
+<li><img src="/2022/10/25/Spark/pair-2.png" class="" title="This is an image"></li>
+<li><img src="/2022/10/25/Spark/pair-act1.png" class="" title="This is an image"></li>
+<li>All the pair RDD operations take <code>an optional second parameter</code> for number of tasks<ul>
+<li>words.reduceByKey((x, y) =&gt; x + y, 5)</li>
+<li>words.groupByKey(5)</li>
+</ul>
+</li>
+</ul>
+<h3 id="A-few-examples"><a href="#A-few-examples" class="headerlink" title="A few examples"></a>A few examples</h3><ul>
+<li><img src="/2022/10/25/Spark/pracs.png" class="" title="This is an image">
+<ul>
+<li>last one is Scala. Two problems with the code, 1) Average calculation would be <code>x1/x2</code> 2) In scala, to get floats, you need to first convert integer to double.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Passing-Functions-to-RDD"><a href="#Passing-Functions-to-RDD" class="headerlink" title="Passing Functions to RDD"></a>Passing Functions to RDD</h2><ul>
+<li>Spark’s API relies heavily on passing functions in the driver program to run on the cluster.</li>
+</ul>
+<h2 id="Understanding-Closures"><a href="#Understanding-Closures" class="headerlink" title="Understanding Closures"></a>Understanding Closures</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">counter = <span class="number">0</span></span><br><span class="line">rdd = parallelize(data)</span><br><span class="line">rdd.foreach(<span class="keyword">lambda</span> x: counter += x)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Counter value: &quot;</span> + counter)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>The behaviour of the above code is undefined, and may not work as intended.</li>
+<li>“counter” in the executor is only a copy of the “counter” in the driver.</li>
+</ul>
+<h2 id="Using-Local-Variables"><a href="#Using-Local-Variables" class="headerlink" title="Using Local Variables"></a>Using Local Variables</h2><ul>
+<li><p>Any external variable you use in a closure will automatically be shipped to the cluster</p>
+<ul>
+<li>Query = sys.stdin.realine()</li>
+<li>Pages.fileter(x =&gt; x.contains(query)).count()</li>
+</ul>
+</li>
+<li><p>Notes:</p>
+<ul>
+<li>Each task gets a new copy (updates aren’t sent back)</li>
+<li>Variables must be serializable</li>
+</ul>
+</li>
+</ul>
+<h2 id="Shared-Variables"><a href="#Shared-Variables" class="headerlink" title="Shared Variables"></a>Shared Variables</h2><ul>
+<li>When you perform transformations and actions that use functions (e.g. mpa(f: T =&gt; U)), Spark will automatically push a clusure containing that function to the workers so that it can run at the workers.</li>
+<li>Any variable or data within a closure or data structure will be distributed to the worker nodes along with the closure.</li>
+<li>When a func is executed on a cluster node, it works on <code>sparate</code> copies of all the variables used in it.</li>
+<li>Two use cases<ul>
+<li>Iterative or single jobs with <code>large</code> global vars<ul>
+<li>Problems: Ineffcient to send large data to each worker with each iteration</li>
+<li>Solution: Broadcast variables</li>
+</ul>
+</li>
+<li>Counting events that occur during job execution<ul>
+<li>Problems: Closures are one way: driver -&gt; worker</li>
+<li>Solution: Accumulators</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Broadcast-Variables"><a href="#Broadcast-Variables" class="headerlink" title="Broadcast Variables"></a>Broadcast Variables</h2><ul>
+<li><p>Broadcast variables allow the programmer to keep a read-only variable cached on each machine rather thatn shipping a copy of it with tasks.</p>
+</li>
+<li><p>Broadcast variables are created from a variable v by calling <code>SparkContext.broadcast(v)</code>. It’s value can be accessed by calling the <code>value</code> methods.</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> broadcastVar = sc.broadcast(<span class="type">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))</span><br><span class="line">broadcastVar.value</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Accumulators"><a href="#Accumulators" class="headerlink" title="Accumulators"></a>Accumulators</h2><ul>
+<li>enable passing value from worker to diver</li>
+<li>can be used to implement counters (as in MapReduce) or sums.</li>
+<li>Only diver can read an accumulators’ value, not task. Task can only update the value.</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> accum = sc.longAccumulator(<span class="string">&quot;My Accumulator&quot;</span>)</span><br><span class="line"><span class="comment">// note: data in Array might be stored in different parititon</span></span><br><span class="line">sc.parallelize(<span class="type">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)).foreach(x =&gt; accum.add(x))</span><br><span class="line">accum.value</span><br></pre></td></tr></table></figure>
+<ul>
+<li>counting empty lines</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">File = sc.textFile(inputFile)</span><br><span class="line"></span><br><span class="line"><span class="comment">## blanklines is created in the driver, and shared among workers</span></span><br><span class="line"><span class="comment">## each workers can access this variable</span></span><br><span class="line">blankLines = sc.accumulator(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">extractCallSigns</span>(<span class="params">line</span>):</span><br><span class="line">  	<span class="keyword">global</span> blankLines <span class="comment"># Make the global var accessible</span></span><br><span class="line">    <span class="keyword">if</span> line == <span class="string">&quot;&quot;</span>:</span><br><span class="line">      	blankLines += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> line.split(<span class="string">&quot; &quot;</span>)</span><br><span class="line">  </span><br><span class="line">callSigns = file.flatMap(extractCallSigns)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Blank lines: %d&quot;</span> %blankLines.value)</span><br></pre></td></tr></table></figure>
+<h1 id="Part-4-Spark-Programming-Model-RDD"><a href="#Part-4-Spark-Programming-Model-RDD" class="headerlink" title="Part 4: Spark Programming Model(RDD)"></a>Part 4: Spark Programming Model(RDD)</h1><h2 id="How-Spark-Works"><a href="#How-Spark-Works" class="headerlink" title="How Spark Works"></a>How Spark Works</h2><ul>
+<li>User application create RDDs, transform them, and run actions</li>
+<li>This results in a DAG(Directed Acyclic Graph) of operators.</li>
+<li>DAG is compiled into stages.</li>
+<li>Each stage is executed as a series of Task (one Task for each partition)</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> file = sc.textFile(<span class="string">&quot;hdfs://...&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> counts = file.flatMap(line =&gt; line.split(<span class="string">&quot; &quot;</span>))</span><br><span class="line">	.map(word =&gt; (word, <span class="number">1</span>))</span><br><span class="line">	.reduceByKey(_+_)</span><br><span class="line"></span><br><span class="line">counts.saveAsTextFile(<span class="string">&quot;hdfs://...&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="Word-Count-in-Spark"><a href="#Word-Count-in-Spark" class="headerlink" title="Word Count in Spark"></a>Word Count in Spark</h2><img src="/2022/10/25/Spark/wc_spark.png" class="" title="This is an image">
+<ul>
+<li>TextFile flatMap map can be run parallel, no need to wait for other partition to finish</li>
+</ul>
+<img src="/2022/10/25/Spark/Execution.png" class="" title="This is an image">
+<h2 id="map-vs-flatMap"><a href="#map-vs-flatMap" class="headerlink" title="map vs flatMap"></a>map vs flatMap</h2><ul>
+<li>map: Return a new distributed dataset formed by passing each element of the source through a function func. (element number doesn’t change)</li>
+<li>flatMap: similar to map, but each input item can be mapped to 0 or more output items( <strong>so func should return a Seq rather than a single item</strong> )</li>
+</ul>
+<img src="/2022/10/25/Spark/map_flatmap.png" class="" title="This is an image">
+<h2 id="Understanding-Spark-Application-Concepts"><a href="#Understanding-Spark-Application-Concepts" class="headerlink" title="Understanding Spark Application Concepts"></a>Understanding Spark Application Concepts</h2><ul>
+<li>Application<ul>
+<li>A user program built on Spark using its APIs. It consists of driver program and executors on the cluster.</li>
+</ul>
+</li>
+<li>SparkContext/SparkSession<ul>
+<li>An object that provides a point of entry to interact with underlying Spark functionality and allows programming Spark with its APIs.</li>
+</ul>
+</li>
+<li>Job<ul>
+<li>A parallel computation consisting of multiple tasks that gets spawned in response to a Spark action.</li>
+</ul>
+</li>
+<li>Stage<ul>
+<li><code>A job comprises several stages. When Spark encounters a function that requires a shuffle it creates a news stage</code>.</li>
+<li>Each job gets divided into smaller sets of tasks called stages that depends on each other.</li>
+</ul>
+</li>
+<li>Task<ul>
+<li>A single unit of work or execution that will be sent to a Spark executor.</li>
+</ul>
+</li>
+<li>Example: Word Count<ul>
+<li>1 driver -&gt; 1 Job -&gt; Stage 1 &amp; Stage2 (Bc only need to shuffle once) -&gt; mutiple tasks to run in parallel.</li>
+</ul>
+</li>
+</ul>
+<h3 id="improve-performance-in-cluster"><a href="#improve-performance-in-cluster" class="headerlink" title="improve performance in cluster"></a>improve performance in cluster</h3><ul>
+<li>Increase partitions</li>
+<li>reduce the operations for data shuffling, so that we can have fewer stages</li>
+<li>In each stage, more task can be run in parallel.</li>
+</ul>
+<h1 id="part-5-Running-on-a-Cluster"><a href="#part-5-Running-on-a-Cluster" class="headerlink" title="part 5: Running on a Cluster"></a>part 5: Running on a Cluster</h1><h2 id="example"><a href="#example" class="headerlink" title="example"></a>example</h2><ul>
+<li>Problem 1: Given a pair RDD of type [(srting, int)], compute the per-key average.</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pair</span><br><span class="line">.mapValues(x =&gt; (x, <span class="number">1</span>))</span><br><span class="line">.reduceByKey((x,y) =&gt; (x._1+y._1, x._2+y._2))</span><br><span class="line">.mapValues(x =&gt; x._1.toDouble/x._2)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Problem 2: Given the data in format of key-value pairs <int, int>, find the maximum value for each key across all values associated with that key.</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> pairs = sc.<span class="type">Parallelize</span>(<span class="type">List</span>((<span class="number">1</span>, <span class="number">2</span>), (<span class="number">3</span>, <span class="number">4</span>), ... ...))</span><br><span class="line"></span><br><span class="line"><span class="comment">//solution1 </span></span><br><span class="line"><span class="keyword">val</span> resMax = pairs.reduceByKey( (a, b) =&gt; <span class="keyword">if</span>(a &gt; b) a <span class="keyword">else</span> b)</span><br><span class="line"></span><br><span class="line"><span class="comment">//solution2</span></span><br><span class="line"><span class="keyword">val</span> resMax = pairs.groupByKey().mapValues(x =&gt; x.max)</span><br><span class="line"></span><br><span class="line">resMax.foreach(x =&gt; println(x._1, x._2))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Problem 3: Given a collection of documents, compute the average length of words starting with each other.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">textFile = sc.textFile(inputFile)</span><br><span class="line">words = textFile.flatMap(<span class="keyword">lambda</span> line: line.split(<span class="string">&quot;&quot;</span>)).<span class="built_in">map</span>(<span class="keyword">lambda</span> x: x.lower())</span><br><span class="line">counts = words.<span class="built_in">filter</span>(<span class="keyword">lambda</span> x: <span class="built_in">len</span>(X) &gt;=<span class="number">1</span> <span class="keyword">and</span> x[<span class="number">0</span>] &lt;=<span class="string">&#x27;z&#x27;</span> <span class="keyword">and</span> x[<span class="number">0</span>] &gt;=<span class="string">&#x27;a&#x27;</span>).<span class="built_in">map</span>(<span class="keyword">lambda</span> x: (x[<span class="number">0</span>], (<span class="built_in">len</span>(x), <span class="number">1</span>)))</span><br><span class="line">avgLen = counts.reduceByKey(<span class="keyword">lambda</span> a, b: (a[<span class="number">0</span>]+b[<span class="number">0</span>], a[<span class="number">1</span>]+b[<span class="number">1</span>])).<span class="built_in">map</span>(<span class="keyword">lambda</span> x: (x[<span class="number">0</span>], x[<span class="number">1</span>][<span class="number">0</span>]/x[<span class="number">1</span>][<span class="number">1</span>]))</span><br><span class="line">avgLen.foreach(<span class="keyword">lambda</span> xL <span class="built_in">print</span>(x[<span class="number">0</span>], x[<span class="number">1</span>]))</span><br></pre></td></tr></table></figure>
+<h1 id="Part-6-Spark-Structured-APIs"><a href="#Part-6-Spark-Structured-APIs" class="headerlink" title="Part 6: Spark Structured APIs"></a>Part 6: Spark Structured APIs</h1><h2 id="Compute-Average-Values-for-Each-Key-using-dataRDD"><a href="#Compute-Average-Values-for-Each-Key-using-dataRDD" class="headerlink" title="Compute Average Values for Each Key using dataRDD"></a>Compute Average Values for Each Key using dataRDD</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val dataRDD = sc.parallelize(<span class="type">List</span>((<span class="string">&quot;Brooke&quot;</span>, <span class="number">20</span>), (<span class="string">&quot;Denny&quot;</span>,</span><br><span class="line"><span class="number">31</span>), (<span class="string">&quot;Jules&quot;</span>, <span class="number">30</span>),(<span class="string">&quot;TD&quot;</span>, <span class="number">35</span>), (<span class="string">&quot;Brooke&quot;</span>, <span class="number">25</span>)))</span><br><span class="line"></span><br><span class="line">dataRDD</span><br><span class="line">.<span class="built_in">map</span>(x =&gt; (x._1, (x._2, <span class="number">1</span>)))</span><br><span class="line">.reduceByKey((a, b) =&gt; (a._1 + b._1, a._2 + b._2))</span><br><span class="line">.<span class="built_in">map</span>(x =&gt; (x._1, x._2._1.toDouble/x._2._2))</span><br></pre></td></tr></table></figure>
+<h2 id="Spark’s-Structured-APIs"><a href="#Spark’s-Structured-APIs" class="headerlink" title="Spark’s Structured APIs"></a>Spark’s Structured APIs</h2><ul>
+<li>Scala</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> data_df = <span class="type">List</span>((<span class="string">&quot;Brooke&quot;</span>, <span class="number">20</span>), (<span class="string">&quot;Denny&quot;</span>,<span class="number">31</span>), (<span class="string">&quot;Jules&quot;</span>, <span class="number">30</span>),(<span class="string">&quot;TD&quot;</span>, <span class="number">35</span>), (<span class="string">&quot;Brooke&quot;</span>,<span class="number">25</span>)).toDF(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;age&quot;</span>)</span><br><span class="line"></span><br><span class="line">data_df.groupBy(<span class="string">&quot;name&quot;</span>).agg(avg(<span class="string">&quot;age&quot;</span>)).show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>python</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> pyspark.sql.functions <span class="keyword">import</span> svg</span><br><span class="line"></span><br><span class="line">data_df = spark.createDataFrame([(<span class="string">&quot;Brooke&quot;</span>,<span class="number">20</span>), (<span class="string">&quot;Denny&quot;</span>, <span class="number">31</span>), (<span class="string">&quot;Jules&quot;</span>, <span class="number">30</span>),(<span class="string">&quot;TD&quot;</span>, <span class="number">35</span>),(<span class="string">&quot;Brooke&quot;</span>, <span class="number">25</span>)], schema = <span class="string">&#x27;name string, age int’)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">data_df.groupBy(&quot;name&quot;).agg(avg(&quot;age&quot;)).show()</span></span><br></pre></td></tr></table></figure>
+<h2 id="Create-DataFrames-Scala"><a href="#Create-DataFrames-Scala" class="headerlink" title="Create DataFrames (Scala)"></a>Create DataFrames (Scala)</h2><h3 id="steps-description"><a href="#steps-description" class="headerlink" title="steps description"></a>steps description</h3><ul>
+<li>Create a DataFrame from a scala object</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Given a list of pairs including names and ages</span></span><br><span class="line"><span class="keyword">val</span> data = <span class="type">List</span>((<span class="string">&quot;Brooke&quot;</span>, <span class="number">20</span>), (<span class="string">&quot;Denny&quot;</span>, <span class="number">31</span>), (<span class="string">&quot;Jules&quot;</span>,</span><br><span class="line"><span class="number">30</span>),(<span class="string">&quot;TD&quot;</span>, <span class="number">35</span>), (<span class="string">&quot;Brooke&quot;</span>, <span class="number">25</span>))</span><br><span class="line"><span class="comment">// Create DataFrame&#x27; from a list</span></span><br><span class="line"><span class="keyword">val</span> dataDF = spark.createDataFrame(data)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>convert an RDD into a DataFrame</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Given a pair RDD including name and age</span></span><br><span class="line"><span class="keyword">val</span> data = sc.parallelize(<span class="type">Seq</span>((<span class="string">&quot;Brooke&quot;</span>, <span class="number">20</span>), (<span class="string">&quot;Denny&quot;</span>, <span class="number">31</span>),</span><br><span class="line">(<span class="string">&quot;Jules&quot;</span>, <span class="number">30</span>),(<span class="string">&quot;TD&quot;</span>, <span class="number">35</span>), (<span class="string">&quot;Brooke&quot;</span>, <span class="number">25</span>)))</span><br><span class="line"><span class="comment">// Create DataFrame&#x27; from ‘RDD’</span></span><br><span class="line"><span class="keyword">val</span> dataDF = spark.createDataFrame(data)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>After having DataFrame, we need to define the schema </li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> dataDF = spark.createDataFrame(data).toDF(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;age&quot;</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>we can also write in this way <code>(data could be a list or an RDD)</code></li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> dataDF = data.toDF(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;age&quot;</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>schema defined at the beginning</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.spark.sql.types._</span><br><span class="line"><span class="keyword">val</span> schema = <span class="type">StructType</span>(<span class="type">Array</span>(<span class="type">StructField</span>(<span class="string">&quot;author&quot;</span>, <span class="type">StringType</span>, <span class="literal">false</span>),</span><br><span class="line"><span class="type">StructField</span>(<span class="string">&quot;title&quot;</span>, <span class="type">StringType</span>, <span class="literal">false</span>),</span><br><span class="line"><span class="type">StructField</span>(<span class="string">&quot;pages&quot;</span>, <span class="type">IntegerType</span>, <span class="literal">false</span>)))</span><br></pre></td></tr></table></figure>
+<h3 id="whole-example"><a href="#whole-example" class="headerlink" title="whole example"></a>whole example</h3><h4 id="scala"><a href="#scala" class="headerlink" title="scala"></a>scala</h4><ul>
+<li>schema defined -&gt; create DataFrame<ul>
+<li>The first argument data must be type RDD[Row]</li>
+<li>The second argumnet schema must be type StructType</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.spark.sql.types._</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.sql._</span><br><span class="line"></span><br><span class="line"><span class="comment">//create the schema</span></span><br><span class="line"><span class="keyword">val</span> schema = <span class="type">StructType</span>(<span class="type">Array</span>(<span class="type">StructField</span>(<span class="string">&quot;name&quot;</span>, <span class="type">StringType</span>,</span><br><span class="line"><span class="literal">false</span>), <span class="type">StructField</span>(<span class="string">&quot;age&quot;</span>, <span class="type">IntegerType</span>, <span class="literal">false</span>)))</span><br><span class="line"></span><br><span class="line"><span class="comment">//Given a list of pairs including names and ages</span></span><br><span class="line"><span class="keyword">val</span> data = <span class="type">List</span>((<span class="string">&quot;Brooke&quot;</span>, <span class="number">20</span>), (<span class="string">&quot;Denny&quot;</span>, <span class="number">31</span>), (<span class="string">&quot;Jules&quot;</span>,</span><br><span class="line"><span class="number">30</span>),(<span class="string">&quot;TD&quot;</span>, <span class="number">35</span>), (<span class="string">&quot;Brooke&quot;</span>, <span class="number">25</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">First way to convert List =&gt; RDD[Row]</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">//create &#x27;Row&#x27; from &#x27;Seq&#x27;</span></span><br><span class="line"><span class="keyword">val</span> row = <span class="type">Row</span>.fromSeq(data)</span><br><span class="line"><span class="comment">//create &#x27;RDD&#x27; from &#x27;Row&#x27;</span></span><br><span class="line"><span class="keyword">val</span> rdd = spark.sparkContext.makeRDD(<span class="type">List</span>(row))</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Second way to convert List =&gt; RDD[Row]</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">//create &#x27;RDD&#x27; from &#x27;List&#x27;</span></span><br><span class="line"><span class="keyword">val</span> rdd = spark.sparkContext.paralleize(data)</span><br><span class="line"><span class="comment">//Transform the pair (String, Integer) to a Row object</span></span><br><span class="line"><span class="keyword">val</span> rddRow = rdd.map(x =&gt; <span class="type">Row</span>(x._1, x._2))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//create DataFrame from RDD and the schema</span></span><br><span class="line"><span class="keyword">val</span> dataDF = spark.createDataFrame(rdd, schema)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>You can also create a DataFrame from a json file</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> blogsDF = spark.read.schema(schema).json(jsonFile)</span><br></pre></td></tr></table></figure>
+<h4 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h4><ul>
+<li>You can create a PySpark DataFrame with an <code>explicit</code> schema</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## Given a list of pairs including names and ages</span></span><br><span class="line">data = [(<span class="string">&quot;Brooke&quot;</span>, <span class="number">20</span>), (<span class="string">&quot;Denny&quot;</span>, <span class="number">31</span>), (<span class="string">&quot;Jules&quot;</span>, <span class="number">30</span>),(<span class="string">&quot;TD&quot;</span>, <span class="number">35</span>),</span><br><span class="line">(<span class="string">&quot;Brooke&quot;</span>, <span class="number">25</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment">## Create DataFram from a list of Rows</span></span><br><span class="line">dataDF = spark.createDataFrame(data, schema. <span class="string">&quot;name string, age int&quot;</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>You can create a PySpark DataFram from an RDD consisting of a list of tuples</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## Given a pair RDD including name and age</span></span><br><span class="line">data = sc.parallelize([(<span class="string">&quot;Brooke&quot;</span>, <span class="number">20</span>), (<span class="string">&quot;Denny&quot;</span>, <span class="number">31</span>), (<span class="string">&quot;Jules&quot;</span>,</span><br><span class="line"><span class="number">30</span>),(<span class="string">&quot;TD&quot;</span>, <span class="number">35</span>), (<span class="string">&quot;Brooke&quot;</span>, <span class="number">25</span>)])</span><br><span class="line"></span><br><span class="line"><span class="comment">## Create DataFrame from a list of Rows</span></span><br><span class="line">dataDF = spark.createDataFrame(data, schema=[<span class="string">&quot;name&quot;</span>,<span class="string">&quot;age&quot;</span>])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Create a PySpark DataFrame from a list of rows</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> Row</span><br><span class="line"></span><br><span class="line"><span class="comment">## Given a list of rows containing names and ages</span></span><br><span class="line">data = [Row(name = <span class="string">&quot;Brooke&quot;</span>, age = <span class="number">20</span>), Row(name = <span class="string">&quot;Denny&quot;</span>, age =</span><br><span class="line"><span class="number">31</span>), Row(name = <span class="string">&quot;Jules&quot;</span>, age = <span class="number">30</span>), Row(name = <span class="string">&quot;TD&quot;</span>, age = <span class="number">35</span>),</span><br><span class="line">Row(name = <span class="string">&quot;Brooke&quot;</span>, age = <span class="number">25</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment">#Create DataFrame from a list of Rows</span></span><br><span class="line">dataDF = spark.createDataFrame(data)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>schema can be printout</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.printSchema()</span><br></pre></td></tr></table></figure>
+<h2 id="Columns"><a href="#Columns" class="headerlink" title="Columns"></a>Columns</h2><ul>
+<li>scala</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dataDF.columns</span><br><span class="line"></span><br><span class="line">dataDF.col(<span class="string">&quot;name&quot;</span>)</span><br><span class="line"></span><br><span class="line">dataDF.select(col(<span class="string">&quot;age&quot;</span>)*<span class="number">2</span>).show</span><br></pre></td></tr></table></figure>
+<ul>
+<li>python</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dataDF.columns()</span><br><span class="line"></span><br><span class="line">dataDF.name</span><br><span class="line"></span><br><span class="line">dataDF.select(dataDF.age * <span class="number">2</span>).show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>withColumn() returns a new DataFrame by adding a column or replacing the existing column that has the same name</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// change to upper functions</span><br><span class="line">from pyspark.sql.functions import upper</span><br><span class="line"></span><br><span class="line">dataDF.withColumn(&quot;name_upper&quot;, upper(dataDF.name)).show()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataaDF.withColumn(&quot;name&quot;, upper(dataDF.name)).show()</span><br></pre></td></tr></table></figure>
+<h2 id="Rows-scala"><a href="#Rows-scala" class="headerlink" title="Rows (scala)"></a>Rows (scala)</h2><ul>
+<li>Row in Spark is a generic Row object, containing one or more columns</li>
+<li>Row is an object in Spark and an ordered collction of fields, we can access its fields by an index starting at 0</li>
+<li>Row objects can be used to create DataFrames</li>
+</ul>
+<h2 id="Grouping-Data"><a href="#Grouping-Data" class="headerlink" title="Grouping Data"></a>Grouping Data</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.groupby[&#x27;color&#x27;].avg().show()</span><br></pre></td></tr></table></figure>
+<h2 id="Transformations-Actions-and-Lazy-Evalution"><a href="#Transformations-Actions-and-Lazy-Evalution" class="headerlink" title="Transformations, Actions, and Lazy Evalution"></a>Transformations, Actions, and Lazy Evalution</h2><ul>
+<li>Two types of Spark DataFrame operations<ul>
+<li>Transformations: all transformations are evaluateed lazily - their results are not computed immediately, but they are recorded or remembered as a lineage.<ul>
+<li>Any transformations where a single output partition can be computed from a single input partition is a narrow transformation: like filter(). <code>no need to wait for each other</code></li>
+<li>Any transformation where data from other partitions is read in, combined, and written to disk is a wide transformation, like groupBy(). <code>Wide Dependencies</code></li>
+</ul>
+</li>
+<li>Actions: An action triggers the lazy Evaluation of all the recorded transformations.</li>
+</ul>
+</li>
+</ul>
+<h2 id="WordCount-using-DataFrame-Scala"><a href="#WordCount-using-DataFrame-Scala" class="headerlink" title="WordCount using DataFrame (Scala)"></a>WordCount using DataFrame (Scala)</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> fileRDD = </span><br><span class="line">spark.sparkContext.textFile(<span class="string">&quot;file:///home/comp9313/inputText&quot;</span>)</span><br><span class="line"><span class="keyword">val</span> wordsDF = fileRDD.flatMap(_.split(<span class="string">&quot; &quot;</span>)).toDF</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> countDF = wordsDF.groupBy(<span class="string">&quot;value&quot;</span>).count()</span><br><span class="line">countDF.collect.foreach(println)</span><br><span class="line"></span><br><span class="line">countDF.write.format(<span class="string">&quot;csv&quot;</span>).save(<span class="string">&quot;file:///home/comp9313/output&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="WordCount-using-DataFrame-python"><a href="#WordCount-using-DataFrame-python" class="headerlink" title="WordCount using DataFrame (python)"></a>WordCount using DataFrame (python)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">fileRDD = spark.sparkContext.textFile(<span class="string">&quot;file:///home/comp9313/inputText&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## solution 1</span></span><br><span class="line">wordsDF = fileRDD.flatMap(<span class="keyword">lambda</span> x: x.split(<span class="string">&quot; &quot;</span>)).<span class="built_in">map</span>(<span class="keyword">lambda</span> x: (x, )).toDF(<span class="string">&quot;word string&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## solution 2</span></span><br><span class="line"><span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> StringType</span><br><span class="line">wordsDF = spark.createDataFrame(fileRDD.flatMap(<span class="keyword">lambda</span> x: x.split(<span class="string">&quot; &quot;</span>)), StringType()).withColumnRenamed(<span class="string">&quot;value&quot;</span>, <span class="string">&quot;word&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">countDF = wordsDF.groupBy(<span class="string">&quot;word&quot;</span>).count()</span><br><span class="line"></span><br><span class="line">countDF.show()</span><br></pre></td></tr></table></figure>
+<h2 id="WordCount-using-DataSet"><a href="#WordCount-using-DataSet" class="headerlink" title="WordCount using DataSet"></a>WordCount using DataSet</h2><p><code>flatMap can only be applied to RDD or Dataset, cannot be applied to DataFrame</code></p>
+<p>01:05:56</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> fileDS = spark.read.textFile(<span class="string">&quot;file:///home/comp9313/imputText&quot;</span>)</span><br><span class="line"><span class="keyword">val</span> wordsDF = fileDS.flatMap(_.split(<span class="string">&quot; &quot;</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="Standalone-Application-Scala"><a href="#Standalone-Application-Scala" class="headerlink" title="Standalone Application (Scala)"></a>Standalone Application (Scala)</h2><img src="/2022/10/25/Spark/standalone.png" class="" title="This is an image">
+<h1 id="part7-Spark-SQL"><a href="#part7-Spark-SQL" class="headerlink" title="part7 Spark SQL"></a>part7 Spark SQL</h1><h2 id="Starting-Point-SparkSession"><a href="#Starting-Point-SparkSession" class="headerlink" title="Starting Point: SparkSession"></a>Starting Point: SparkSession</h2><ul>
+<li>scala</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.spark.sql.<span class="type">SparkSession</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> spark = <span class="type">SparkSession</span></span><br><span class="line">	.builder()</span><br><span class="line">	.appName(<span class="string">&quot;Spark SQL basic example&quot;</span>)</span><br><span class="line">	.config(<span class="string">&quot;spark.some.config.option&quot;</span>, <span class="string">&quot;some-value&quot;</span>)</span><br><span class="line">	.getOrCreate()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>python</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"></span><br><span class="line">spark = SparkSession.builder.master(<span class="string">&quot;local&quot;</span>).appName(<span class="string">&quot;Spark SQL basic example&quot;</span>).getOrCreate()</span><br></pre></td></tr></table></figure>
+<h2 id="Creating-DataFrames-from-JSON"><a href="#Creating-DataFrames-from-JSON" class="headerlink" title="Creating DataFrames from JSON"></a>Creating DataFrames from JSON</h2><p>With a SparkSession, applications can create DataFrames based on the content of a JSON file.</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> df = spark.read.json(<span class="string">&quot;people.json&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Displays the content of the DataFrame to stdout</span></span><br><span class="line">df.show()</span><br></pre></td></tr></table></figure>
+<h2 id="Running-SQL-Queries-Programmatically"><a href="#Running-SQL-Queries-Programmatically" class="headerlink" title="Running SQL Queries Programmatically"></a>Running SQL Queries Programmatically</h2><h3 id="Temporary-View"><a href="#Temporary-View" class="headerlink" title="Temporary View"></a>Temporary View</h3><p>The sql function on a SparkSession enables applications to run SQL queries programmatically and returns the result as a DataFrame.</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Register the DataFrame as a SQL temporary view</span></span><br><span class="line">df.createOrReplaceTemp√iew(<span class="string">&quot;people&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> sqlDF = spark.sql(<span class="string">&quot;SELECT * FROM people&quot;</span>)</span><br><span class="line">sqlDF.show()</span><br></pre></td></tr></table></figure>
+<h3 id="Global-Temporary-View"><a href="#Global-Temporary-View" class="headerlink" title="Global Temporary View"></a>Global Temporary View</h3><ul>
+<li>Temporary views in Spark SQL are <code>session-scoped</code> and will disappear if the session (spark session) that creates it terminates.</li>
+<li><code>Global temporary view</code>: a temporary biew that is shared among  all sessions and keep alive until the Spark application terminates.</li>
+<li>Global temporary view is tied to a system preserved database <code>global_temp</code>, and we must use the qualified name to refer it, e.g. <code>SELECT * FROM global_temp.view1</code></li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Register the DataFrame as a global temporary biew</span></span><br><span class="line">df.createGlobalTempView(<span class="string">&quot;people&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//Global temporary view is tied to a system preserved database `global_temp`</span></span><br><span class="line">spark.sql(<span class="string">&quot;SELECT * FROM global_temp.people&quot;</span>).show()</span><br><span class="line"></span><br><span class="line"><span class="comment">//Global temporary view is cross-session</span></span><br><span class="line">spark.newSession().sql(<span class="string">&quot;SELECT * FROM global_temp.people&quot;</span>).show()</span><br></pre></td></tr></table></figure>
+<h2 id="Examples-word-count-using-SQL-Python"><a href="#Examples-word-count-using-SQL-Python" class="headerlink" title="Examples: word count using SQL (Python)"></a>Examples: word count using SQL (Python)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fileDF = spark.read.text(<span class="string">&quot;file:///home/comp9313/inputText&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pyspark.sql.functions <span class="keyword">import</span> *</span><br><span class="line">wordsDF = fileDF.select(explode(split(fileDF.value, <span class="string">&#x27; &#x27;</span>)).alias(<span class="string">&quot;word&quot;</span>))</span><br><span class="line"></span><br><span class="line">countDF = wordsDF.groupBy(wordsDF.word).count()</span><br></pre></td></tr></table></figure>
+<h2 id="Error-Detection-of-structured-APIs"><a href="#Error-Detection-of-structured-APIs" class="headerlink" title="Error Detection of structured APIs"></a>Error Detection of structured APIs</h2><ul>
+<li><p>Compile time is the period when the programming code(e.g..c/python/Java) is converted to the machine code (i.e. binary code)</p>
+</li>
+<li><p>Runtime is the period of time when a program is running and generally occurs after compile time.</p>
+</li>
+</ul>
+<img src="/2022/10/25/Spark/error.png" class="" title="This is an image">
+<h1 id="part-8-dataframe-and-Spark-SQL-practice"><a href="#part-8-dataframe-and-Spark-SQL-practice" class="headerlink" title="part 8: dataframe and Spark SQL practice"></a>part 8: dataframe and Spark SQL practice</h1><p>Problem: Given a collection of documents, compute the average length of words starting with each letter. </p>
+<h2 id="RDD"><a href="#RDD" class="headerlink" title="RDD"></a>RDD</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">textFile = sc.textFile(inputFile)</span><br><span class="line">words = textFile.flatMap(<span class="keyword">lambda</span> line: line.split(<span class="string">&quot; &quot;</span>)).<span class="built_in">map</span>(<span class="keyword">lambda</span> x: x.lower())</span><br><span class="line"></span><br><span class="line">counts = words.<span class="built_in">filter</span>(<span class="keyword">lambda</span> x: <span class="built_in">len</span>(x) &gt;=<span class="number">1</span> <span class="keyword">and</span> x[<span class="number">0</span>]&lt;=<span class="string">&#x27;z&#x27;</span> <span class="keyword">and</span> x[<span class="number">0</span>]&gt;=<span class="string">&#x27;a&#x27;</span>).<span class="built_in">map</span>(<span class="keyword">lambda</span> x: (x[<span class="number">0</span>], (<span class="built_in">len</span>(x), <span class="number">1</span>)))</span><br><span class="line"></span><br><span class="line">avgLen = counts.reduceByKey(<span class="keyword">lambda</span> a, b: (a[<span class="number">0</span>]+b[<span class="number">0</span>], a[<span class="number">1</span>]+b[<span class="number">1</span>])).<span class="built_in">map</span>(<span class="keyword">lambda</span> x:</span><br><span class="line">(x[<span class="number">0</span>], x[<span class="number">1</span>][<span class="number">0</span>]/x[<span class="number">1</span>][<span class="number">1</span>])</span><br><span class="line"> </span><br><span class="line">avgLen.foreach(<span class="keyword">lambda</span> x: <span class="built_in">print</span>(x[<span class="number">0</span>], x[<span class="number">1</span>]))                                                                     </span><br><span class="line">                                                                     </span><br></pre></td></tr></table></figure>
+<h2 id="DataFrame"><a href="#DataFrame" class="headerlink" title="DataFrame"></a>DataFrame</h2><img src="/2022/10/25/Spark/dataframe_exp.png" class="" title="This is an image">
+<h2 id="Spark-sql"><a href="#Spark-sql" class="headerlink" title="Spark sql"></a>Spark sql</h2><img src="/2022/10/25/Spark/spark_sql.png" class="" title="This is an image">
+<h1 id="part-9-Spark-GraphX-scala-RDD"><a href="#part-9-Spark-GraphX-scala-RDD" class="headerlink" title="part 9: Spark GraphX - scala - RDD"></a>part 9: Spark GraphX - scala - RDD</h1><ul>
+<li><p>Graphx is Apache Spark’s API for graphs and graph-parallel computation.</p>
+</li>
+<li><p>Graph-Parallel Computation</p>
+</li>
+<li><p>Data-Parallel and Graph-Parallel differences</p>
+</li>
+<li>View a Graph as a table</li>
+</ul>
+<img src="/2022/10/25/Spark/graph_spark.png" class="" title="This is an image">
+<h2 id="GraphX-Example"><a href="#GraphX-Example" class="headerlink" title="GraphX Example"></a>GraphX Example</h2><ul>
+<li>Import Spark and GraphX into your project</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.spark._</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.graphx._</span><br><span class="line"><span class="comment">// To make some of the examples work we will also need RDD</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.rdd.<span class="type">RDD</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>begin by creating the property graph from arrays of vertices and edges</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> vertexArray = <span class="type">Array</span>(</span><br><span class="line">  (<span class="number">3</span>L, (<span class="string">&quot;rxin&quot;</span>, <span class="string">&quot;student&quot;</span>)),</span><br><span class="line">  (<span class="number">7</span>L, (<span class="string">&quot;jgonzal&quot;</span>, <span class="string">&quot;postdoc&quot;</span>)),</span><br><span class="line">  (<span class="number">5</span>L, (<span class="string">&quot;frankie&quot;</span>, <span class="string">&quot;prof&quot;</span>))</span><br><span class="line">  ...</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> edgeArray = <span class="type">Array</span>(</span><br><span class="line">  <span class="type">Edge</span>(<span class="number">3</span>L, <span class="number">7</span>L, <span class="string">&quot;collab&quot;</span>),</span><br><span class="line">  <span class="type">Edge</span>(<span class="number">5</span>L, <span class="number">3</span>L, <span class="string">&quot;advisor&quot;</span>),</span><br><span class="line">  <span class="type">Edge</span>(<span class="number">2</span>L, <span class="number">3</span>L, <span class="string">&quot;colleage&quot;</span>)</span><br><span class="line">  ...</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Construct a property Graph<ul>
+<li>Edges have a srcId and a dstId corresponding to the source and destination vertex identifiers.</li>
+<li>In addition, the Edge class has an attr member which stores the edge property</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Assum the SparkContext has already been constructed</span></span><br><span class="line"><span class="keyword">val</span> sc: <span class="type">SparkContext</span></span><br><span class="line"><span class="comment">// Create and RDD for the vertices</span></span><br><span class="line"><span class="keyword">val</span> users: <span class="type">RDD</span>[(<span class="type">VertexId</span>, (string, string))] = </span><br><span class="line">	sc.parallelize(vertexArray)</span><br><span class="line"><span class="comment">// Create an RDD for edges</span></span><br><span class="line"><span class="keyword">val</span> relationships: <span class="type">RDD</span>[<span class="type">Edge</span>[<span class="type">String</span>]] = </span><br><span class="line">	sc.paralleize(edgeArray)</span><br><span class="line"><span class="comment">// Define a default user in case there are relationship with missing user</span></span><br><span class="line"><span class="keyword">val</span> defaultUser = (<span class="string">&quot;John Doe&quot;</span>, <span class="string">&quot;Missing&quot;</span>)</span><br><span class="line"><span class="comment">//Build the initial Graph</span></span><br><span class="line"><span class="keyword">val</span> graph = <span class="type">Graph</span>(users, relationships, defaultUser)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Deconstruct a Property Graph<ul>
+<li>we want to extract the vertex and edge RDD views of a graph</li>
+<li>The graph class contains members(graph.vertices and graph.edges) to access the vertices and edges of the graph</li>
+</ul>
+</li>
+</ul>
+<p>Example 1:</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Count all users which are postdocs</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Graph.vertices returns an VertexRDD[(String, String)] which extends RDD[(VertexId, (String, String))] so we can use scala case expression to deconstruct the tuple.</span></span><br><span class="line">graph.vertices.filter &#123;<span class="keyword">case</span> (id, (name, pos)) =&gt; pos == <span class="string">&quot;postdoc&quot;</span>&#125;.count</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Count all the edges where src &gt; dst</span></span><br><span class="line">graph.edges.filter(e =&gt; e.srcId &gt; e.dstId).count</span><br><span class="line"><span class="comment">// graph edges returns an EdgeRDD containing Edge[String]objects</span></span><br><span class="line">graph.edges.filter&#123; <span class="keyword">case</span> <span class="type">Edge</span>(src, dst, prop) =&gt; src &gt; dst&#125;.count</span><br></pre></td></tr></table></figure>
+<p>Example 2:</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// method1</span></span><br><span class="line">graph.vertices.filter &#123; <span class="keyword">case</span> (id, (name, pos)) =&gt; pos == <span class="string">&quot;prof&quot;</span>&#125;.collect.foreach &#123; <span class="keyword">case</span> (id, (name, age)) =&gt; println(<span class="string">s&quot;<span class="subst">$name</span> is professor&quot;</span>)&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// method2 ( but _2 means position 2)</span></span><br><span class="line">graph.vertices.filter( x =&gt; x._2._2 == <span class="string">&quot;prof&quot;</span>).collect.foreach(x =&gt; println(x._2._1 + <span class="string">&quot;is Professor&quot;</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="Triplet-View"><a href="#Triplet-View" class="headerlink" title="Triplet View"></a>Triplet View</h2><p>The triplet view logically joins the vertex and edge propeties yielding an RDD[EdgeTriple[VD, ED]] containing instances of the EdgeTriplet class</p>
+<p>This ‘join’ can be expressed in the following SQL expression:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> src.id, dst.id, src.attr, e.attr, dst.attr</span><br><span class="line"><span class="keyword">From</span> edges <span class="keyword">As</span> e <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> vertices <span class="keyword">AS</span> src, vertices <span class="keyword">AS</span> dst</span><br><span class="line"><span class="keyword">ON</span> e.srcId <span class="operator">=</span> src.Id <span class="keyword">AND</span> e.dstId <span class="operator">=</span> dst.Id</span><br></pre></td></tr></table></figure>
+<img src="/2022/10/25/Spark/triplet.png" class="" title="This is an image">
+<h2 id="EdgeTriplet-class"><a href="#EdgeTriplet-class" class="headerlink" title="EdgeTriplet class"></a>EdgeTriplet class</h2><ul>
+<li>The Edge Triplet class extends the Edge class by adding the srcAttr and dstAttr members which contain the source and destination properties respectively.</li>
+<li>We can use the triplet view of graph to render a collection of strings describing relationships between users.</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Contructed from above</span></span><br><span class="line"><span class="keyword">val</span> graph: <span class="type">Graph</span>[(<span class="type">String</span>, <span class="type">String</span>), string]</span><br><span class="line"></span><br><span class="line"><span class="comment">// user the triplets view to create an RDD of facts</span></span><br><span class="line"><span class="comment">// attr 1 means position 1</span></span><br><span class="line"><span class="keyword">val</span> facts: <span class="type">RDD</span>[<span class="type">String</span>] = </span><br><span class="line">	graph.triplets.map(triplet =&gt; </span><br><span class="line">                    triplet.srcAttr._1 + <span class="string">&quot;is the &quot;</span> + triplet.attr + <span class="string">&quot; of &quot;</span> +</span><br><span class="line">                    triplet.dstAttr._1)</span><br><span class="line"></span><br><span class="line">facts.collect.foreach(println(_))</span><br></pre></td></tr></table></figure>
+<h2 id="Graph-Operators"><a href="#Graph-Operators" class="headerlink" title="Graph Operators"></a>Graph Operators</h2><img src="/2022/10/25/Spark/graph_operator.png" class="" title="This is an image">
+<h2 id="Property-Operators"><a href="#Property-Operators" class="headerlink" title="Property Operators"></a>Property Operators</h2><ul>
+<li><p>Each of these operators yields a new graph with the vertex or edge properties modified by the user defined map function</p>
+</li>
+<li><p>In each case the graph structure is unaffected</p>
+</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Graph</span>[<span class="type">VD</span>, <span class="type">ED</span>] </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">mapVertices</span></span>[<span class="type">VD2</span>](map: (<span class="type">VertexId</span>, <span class="type">VD</span>) =&gt; <span class="type">VD2</span>): <span class="type">Graph</span>[<span class="type">VD2</span>, <span class="type">ED</span>]</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">mapEdges</span></span>[<span class="type">ED2</span>](map: <span class="type">Edge</span>[<span class="type">ED</span>] =&gt; <span class="type">ED2</span>): <span class="type">Graph</span>[<span class="type">VD</span>, <span class="type">ED2</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>must build new graph explicitly</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> newVertices = graph.vertices.map&#123; <span class="keyword">case</span> (id, attr) =&gt; (id, mapUdf(id, attr))&#125;</span><br><span class="line"><span class="keyword">val</span> newGraph = <span class="type">Graph</span>(newVertices, graph.edges)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>The second one can preserve the structural indices of the original graph and would benefit from the GraphX system optimiztations</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> newGragh = graph.mapVertices((id, attr) =&gt; mapUdf(id, attr))</span><br></pre></td></tr></table></figure>
+<h2 id="Structural-operators"><a href="#Structural-operators" class="headerlink" title="Structural operators"></a>Structural operators</h2><img src="/2022/10/25/Spark/Structural_opr.png" class="" title="This is an image">
+<h2 id="Neignbourhood-Aggregation"><a href="#Neignbourhood-Aggregation" class="headerlink" title="Neignbourhood Aggregation"></a>Neignbourhood Aggregation</h2><p>aggregating information about the neighbourhood of each vertex</p>
+<p>The core aggregation operation in GraphX is aggregateMessages</p>
+<p>Components:</p>
+<pre><code>- A user-defined `sendMsg` function, to send msgs for each edge triplet in the graph
+- A user-defined `mergeMsg` function, to aggregate those msgs at their destination vertex.
+</code></pre><p>Example case:</p>
+<p>Use the aggregateMessages operator to compute the average age of the more senior followers of each user</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// followers: pointing to the current user</span></span><br><span class="line"><span class="comment">// more senior: older than the current user</span></span><br><span class="line"><span class="keyword">val</span> graph: <span class="type">Graph</span>[<span class="type">Double</span>, <span class="type">Int</span>] = </span><br><span class="line">	<span class="type">GraphGenerators</span>.logNormalGraph(sc, numVertices = <span class="number">100</span>).mapVertices( (id, _) =&gt; id.toDouble )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">////// Map phases</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Compute the number of older followers and their total age</span></span><br><span class="line"><span class="keyword">val</span> olderFollowers: <span class="type">VertexRDD</span>[(int, <span class="type">Double</span>)] = graph.aggregateMessages[(<span class="type">Int</span>, <span class="type">Double</span>)] ( <span class="comment">// Map functions</span></span><br><span class="line">  triplet =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (triplet.srcAttr &gt; triplet.dstAttr) &#123;</span><br><span class="line">      <span class="comment">// send message to destination vertex containing counter and age</span></span><br><span class="line">      triplet.sendToDst((<span class="number">1</span>, triplet.srcAttr))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// Reduce: add counter and age</span></span><br><span class="line">  (a, b) =&gt; (a._1 + b._1, a._2 + b._2 )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Divide total age by the number of older followers to get average age</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> avgAgeOlderFollowers: <span class="type">VertexRDD</span>[<span class="type">Double</span>] = </span><br><span class="line">	olderFollower.mapValues( (id, value ) =&gt; </span><br><span class="line">      value <span class="keyword">match</span> &#123; <span class="keyword">case</span> (count, totalAge) =&gt; totalAge / count&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Display the result</span></span><br></pre></td></tr></table></figure>
+<h2 id="Pregel-Operators"><a href="#Pregel-Operators" class="headerlink" title="Pregel Operators"></a>Pregel Operators</h2><ul>
+<li>Processing: a series of supersteps</li>
+<li>Vertex: computation is defined to run on each vertex</li>
+<li>Superstep S: all vertices</li>
+</ul>
+<h3 id="Bulk-Synchronous-Parallel-Model-BSP"><a href="#Bulk-Synchronous-Parallel-Model-BSP" class="headerlink" title="Bulk Synchronous Parallel Model (BSP)"></a>Bulk Synchronous Parallel Model (BSP)</h3><ul>
+<li>Processing: a series of supersteps</li>
+<li>Vertex computation is defined to run on each vertex</li>
+<li>Superstep S: all vertices compute in parallel; each vertex v may<ul>
+<li>receive messages sent to v from superstep S-1</li>
+<li>Perform some computation: modify its states and the states of its outgoing edges</li>
+<li>send messages to other vertices (to be received in the next superstep)</li>
+</ul>
+</li>
+<li>Superstep: the vertices compute in parallel<ul>
+<li>Each vertex:<ul>
+<li>Receives messages sent in the previous superstep</li>
+<li>Executes the same user-defined function</li>
+<li>Modifies its value or that of its outgoing edges</li>
+<li>Sends messages to other vertices (to be received in the next superstep)</li>
+<li>Votes to halt if it has no further work to do</li>
+</ul>
+</li>
+<li>Termination condition:<ul>
+<li>All vertices are simultanenously inactive</li>
+<li>A vertex can choose to deactivate itself</li>
+<li><code>is &quot;woken up&quot; if new msgs received</code> 一旦收到新的msg就会被唤醒</li>
+</ul>
+</li>
+<li>During a superstep, the following cna happen in the framework<ul>
+<li>It receives and reads messages that are sent to v from the previous superstep s-1.</li>
+<li>It applies a user-defined function f to each vertices in parallel, so essentially specifies the behaviour of a single vertex v at a single superstep s.</li>
+<li>It can mutate the state of v.</li>
+<li>It can send messages to other vertices (typically along outgoing edges) that the vertices will receive in the next superstep s + 1.</li>
+</ul>
+</li>
+<li>All communications are between supersteps s and s+1.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Example-Find-the-minimum-value-in-a-graph"><a href="#Example-Find-the-minimum-value-in-a-graph" class="headerlink" title="Example: Find the minimum value in a graph"></a>Example: Find the minimum value in a graph</h3><p>Psedo-code definition of f is also given above, it will:</p>
+<ul>
+<li>Set originalValue to the current value of the vertex.</li>
+<li>Mutate the value of the vertex to the minimum of all the <code>incoming messages and originalValue</code>. 新value是incoming msgs 和 原始值中最小的</li>
+<li><ul>
+<li>If originalValue and value are the same<ul>
+<li>then we will render the vertex inactive.</li>
+<li><code>Inactive node will not send out msgs</code></li>
+<li><code>Inactive mode will be activated once receving msgs</code></li>
+</ul>
+</li>
+<li>Else,<ul>
+<li>send message out to all its outgoing neighbours.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Example-SSSP-Parallel-BFS-in-Pregel"><a href="#Example-SSSP-Parallel-BFS-in-Pregel" class="headerlink" title="Example: SSSP - Parallel BFS in Pregel"></a>Example: SSSP - Parallel BFS in Pregel</h3><ul>
+<li>Normal BFS<ul>
+<li>Update node one by one</li>
+</ul>
+</li>
+<li>Parallel BFS in Pregel</li>
+</ul>
+<p>​    InitialValue for source node is 0, and for others is Inf.</p>
+<p>​    <img src="/2022/10/25/Spark/SSSP.png" class="" title="This is an image"></p>
+<h3 id="Scala-Curring"><a href="#Scala-Curring" class="headerlink" title="Scala Curring"></a>Scala Curring</h3><ul>
+<li>Methods may define multiple parameter lists. When a method is called with a fewer number of parameter lists, then this will yield a function taking the missing parameters lists as its arguments.</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">modN</span></span>(n: <span class="type">Int</span>)(x: <span class="type">Int</span>) = ((x % n) == <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> nums = <span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">nums.filter(modN(<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Results:<ul>
+<li>nums.filter(modN(2)) = nums.filter(x =&gt; modN(2)(x))</li>
+</ul>
+</li>
+</ul>
+<h3 id="Pregel-operator"><a href="#Pregel-operator" class="headerlink" title="Pregel operator"></a>Pregel operator</h3><p>Current superstep</p>
+<ul>
+<li>mergeMsg:<ul>
+<li>Messages delivered from vertices in the previous superstep are combined to a single message by a custom <code>mergeMsg function</code>.</li>
+</ul>
+</li>
+<li>Vprog:<ul>
+<li>The custom vprog method decides how to update the vertex data based on the message received from mergeMsg.</li>
+</ul>
+</li>
+<li>D:<ul>
+<li>The custom sendMsg function decides which vertices will receive messages in the next superstep.</li>
+</ul>
+</li>
+</ul>
+<h1 id="Spark-GraphFrames"><a href="#Spark-GraphFrames" class="headerlink" title="Spark GraphFrames"></a>Spark GraphFrames</h1><p>GraphFrames are built on top of Spark DataFrames, resulting some key advantages.</p>
+<ul>
+<li>Provide APIs for Python, Java &amp; Scala.</li>
+</ul>
+
+    </div>
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------Ending<i class="fa fa-paw"></i>Thanks-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/21/client-server/" rel="prev" title="client-server">
+      <i class="fa fa-chevron-left"></i> client-server
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/19/finding-similar-items/" rel="next" title="finding_similar_items">
+      finding_similar_items <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#part1-Spark-intro"><span class="nav-number">1.</span> <span class="nav-text">part1 Spark intro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Recall"><span class="nav-number">1.1.</span> <span class="nav-text">Recall</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Goals-of-Spark"><span class="nav-number">1.2.</span> <span class="nav-text">Goals of Spark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ease-of-Use"><span class="nav-number">1.3.</span> <span class="nav-text">Ease of Use</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wordcount-example"><span class="nav-number">1.4.</span> <span class="nav-text">wordcount example</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#part2-RDD-Resillient-Distributed-Dataset"><span class="nav-number">2.</span> <span class="nav-text">part2 RDD: Resillient Distributed Dataset</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Part-3-Programming-with-RDD"><span class="nav-number">3.</span> <span class="nav-text">Part 3: Programming with RDD</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SparkContext"><span class="nav-number">3.1.</span> <span class="nav-text">SparkContext</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark-Key-Value-RDDs"><span class="nav-number">3.2.</span> <span class="nav-text">Spark Key-Value RDDs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#A-few-examples"><span class="nav-number">3.2.1.</span> <span class="nav-text">A few examples</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Passing-Functions-to-RDD"><span class="nav-number">3.3.</span> <span class="nav-text">Passing Functions to RDD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Understanding-Closures"><span class="nav-number">3.4.</span> <span class="nav-text">Understanding Closures</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-Local-Variables"><span class="nav-number">3.5.</span> <span class="nav-text">Using Local Variables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shared-Variables"><span class="nav-number">3.6.</span> <span class="nav-text">Shared Variables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Broadcast-Variables"><span class="nav-number">3.7.</span> <span class="nav-text">Broadcast Variables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Accumulators"><span class="nav-number">3.8.</span> <span class="nav-text">Accumulators</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Part-4-Spark-Programming-Model-RDD"><span class="nav-number">4.</span> <span class="nav-text">Part 4: Spark Programming Model(RDD)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#How-Spark-Works"><span class="nav-number">4.1.</span> <span class="nav-text">How Spark Works</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Word-Count-in-Spark"><span class="nav-number">4.2.</span> <span class="nav-text">Word Count in Spark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map-vs-flatMap"><span class="nav-number">4.3.</span> <span class="nav-text">map vs flatMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Understanding-Spark-Application-Concepts"><span class="nav-number">4.4.</span> <span class="nav-text">Understanding Spark Application Concepts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#improve-performance-in-cluster"><span class="nav-number">4.4.1.</span> <span class="nav-text">improve performance in cluster</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#part-5-Running-on-a-Cluster"><span class="nav-number">5.</span> <span class="nav-text">part 5: Running on a Cluster</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#example"><span class="nav-number">5.1.</span> <span class="nav-text">example</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Part-6-Spark-Structured-APIs"><span class="nav-number">6.</span> <span class="nav-text">Part 6: Spark Structured APIs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Compute-Average-Values-for-Each-Key-using-dataRDD"><span class="nav-number">6.1.</span> <span class="nav-text">Compute Average Values for Each Key using dataRDD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark%E2%80%99s-Structured-APIs"><span class="nav-number">6.2.</span> <span class="nav-text">Spark’s Structured APIs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-DataFrames-Scala"><span class="nav-number">6.3.</span> <span class="nav-text">Create DataFrames (Scala)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#steps-description"><span class="nav-number">6.3.1.</span> <span class="nav-text">steps description</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#whole-example"><span class="nav-number">6.3.2.</span> <span class="nav-text">whole example</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#scala"><span class="nav-number">6.3.2.1.</span> <span class="nav-text">scala</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python"><span class="nav-number">6.3.2.2.</span> <span class="nav-text">Python</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Columns"><span class="nav-number">6.4.</span> <span class="nav-text">Columns</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rows-scala"><span class="nav-number">6.5.</span> <span class="nav-text">Rows (scala)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Grouping-Data"><span class="nav-number">6.6.</span> <span class="nav-text">Grouping Data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transformations-Actions-and-Lazy-Evalution"><span class="nav-number">6.7.</span> <span class="nav-text">Transformations, Actions, and Lazy Evalution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WordCount-using-DataFrame-Scala"><span class="nav-number">6.8.</span> <span class="nav-text">WordCount using DataFrame (Scala)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WordCount-using-DataFrame-python"><span class="nav-number">6.9.</span> <span class="nav-text">WordCount using DataFrame (python)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WordCount-using-DataSet"><span class="nav-number">6.10.</span> <span class="nav-text">WordCount using DataSet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Standalone-Application-Scala"><span class="nav-number">6.11.</span> <span class="nav-text">Standalone Application (Scala)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#part7-Spark-SQL"><span class="nav-number">7.</span> <span class="nav-text">part7 Spark SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Starting-Point-SparkSession"><span class="nav-number">7.1.</span> <span class="nav-text">Starting Point: SparkSession</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-DataFrames-from-JSON"><span class="nav-number">7.2.</span> <span class="nav-text">Creating DataFrames from JSON</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Running-SQL-Queries-Programmatically"><span class="nav-number">7.3.</span> <span class="nav-text">Running SQL Queries Programmatically</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Temporary-View"><span class="nav-number">7.3.1.</span> <span class="nav-text">Temporary View</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Global-Temporary-View"><span class="nav-number">7.3.2.</span> <span class="nav-text">Global Temporary View</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Examples-word-count-using-SQL-Python"><span class="nav-number">7.4.</span> <span class="nav-text">Examples: word count using SQL (Python)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Error-Detection-of-structured-APIs"><span class="nav-number">7.5.</span> <span class="nav-text">Error Detection of structured APIs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#part-8-dataframe-and-Spark-SQL-practice"><span class="nav-number">8.</span> <span class="nav-text">part 8: dataframe and Spark SQL practice</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RDD"><span class="nav-number">8.1.</span> <span class="nav-text">RDD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DataFrame"><span class="nav-number">8.2.</span> <span class="nav-text">DataFrame</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark-sql"><span class="nav-number">8.3.</span> <span class="nav-text">Spark sql</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#part-9-Spark-GraphX-scala-RDD"><span class="nav-number">9.</span> <span class="nav-text">part 9: Spark GraphX - scala - RDD</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GraphX-Example"><span class="nav-number">9.1.</span> <span class="nav-text">GraphX Example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Triplet-View"><span class="nav-number">9.2.</span> <span class="nav-text">Triplet View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EdgeTriplet-class"><span class="nav-number">9.3.</span> <span class="nav-text">EdgeTriplet class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Graph-Operators"><span class="nav-number">9.4.</span> <span class="nav-text">Graph Operators</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Property-Operators"><span class="nav-number">9.5.</span> <span class="nav-text">Property Operators</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Structural-operators"><span class="nav-number">9.6.</span> <span class="nav-text">Structural operators</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Neignbourhood-Aggregation"><span class="nav-number">9.7.</span> <span class="nav-text">Neignbourhood Aggregation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pregel-Operators"><span class="nav-number">9.8.</span> <span class="nav-text">Pregel Operators</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bulk-Synchronous-Parallel-Model-BSP"><span class="nav-number">9.8.1.</span> <span class="nav-text">Bulk Synchronous Parallel Model (BSP)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-Find-the-minimum-value-in-a-graph"><span class="nav-number">9.8.2.</span> <span class="nav-text">Example: Find the minimum value in a graph</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-SSSP-Parallel-BFS-in-Pregel"><span class="nav-number">9.8.3.</span> <span class="nav-text">Example: SSSP - Parallel BFS in Pregel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scala-Curring"><span class="nav-number">9.8.4.</span> <span class="nav-text">Scala Curring</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pregel-operator"><span class="nav-number">9.8.5.</span> <span class="nav-text">Pregel operator</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark-GraphFrames"><span class="nav-number">10.</span> <span class="nav-text">Spark GraphFrames</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <!--
+  <p class="site-author-name" itemprop="name">Haoyu Li</p>
+  -->
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Haoyu Li</span>
+</div>
+
+<div class="powered-by">
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <i class="fa fa-user-md"></i>
+    <span id="busuanzi_container_site_uv">
+        本站访客数:<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">
+        本站访问量<span id="busuanzi_value_site_pv"></span>
+    </span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+</body>
+</html>

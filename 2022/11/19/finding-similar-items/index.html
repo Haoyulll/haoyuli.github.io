@@ -20,21 +20,21 @@
     var CONFIG = {"hostname":"haoyulll.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Hello world!">
+  <meta name="description" content="Finding Similar items">
 <meta property="og:type" content="article">
-<meta property="og:title" content="first-post">
-<meta property="og:url" content="https://haoyulll.github.io/2022/09/16/first-post/index.html">
+<meta property="og:title" content="finding_similar_items">
+<meta property="og:url" content="https://haoyulll.github.io/2022/11/19/finding-similar-items/index.html">
 <meta property="og:site_name" content="Haoyu Li&#39;s note">
-<meta property="og:description" content="Hello world!">
+<meta property="og:description" content="Finding Similar items">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://haoyulll.github.io/2022/09/16/first-post/div.png">
-<meta property="article:published_time" content="2022-09-16T07:13:34.000Z">
-<meta property="article:modified_time" content="2022-10-04T02:05:39.134Z">
+<meta property="og:image" content="https://haoyulll.github.io/2022/11/19/finding-similar-items/Jaccard.png">
+<meta property="article:published_time" content="2022-11-19T03:07:36.000Z">
+<meta property="article:modified_time" content="2022-11-27T04:12:46.343Z">
 <meta property="article:author" content="Haoyu Li">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://haoyulll.github.io/2022/09/16/first-post/div.png">
+<meta name="twitter:image" content="https://haoyulll.github.io/2022/11/19/finding-similar-items/Jaccard.png">
 
-<link rel="canonical" href="https://haoyulll.github.io/2022/09/16/first-post/">
+<link rel="canonical" href="https://haoyulll.github.io/2022/11/19/finding-similar-items/">
 
 
 <script id="page-configurations">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>first-post | Haoyu Li's note</title>
+  <title>finding_similar_items | Haoyu Li's note</title>
   
 
 
@@ -163,7 +163,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://haoyulll.github.io/2022/09/16/first-post/">
+    <link itemprop="mainEntityOfPage" href="https://haoyulll.github.io/2022/11/19/finding-similar-items/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -176,7 +176,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          first-post
+          finding_similar_items
         </h1>
 
         <div class="post-meta">
@@ -186,14 +186,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2022-09-16 17:13:34" itemprop="dateCreated datePublished" datetime="2022-09-16T17:13:34+10:00">2022-09-16</time>
+              <time title="Created: 2022-11-19 14:07:36" itemprop="dateCreated datePublished" datetime="2022-11-19T14:07:36+11:00">2022-11-19</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-10-04 13:05:39" itemprop="dateModified" datetime="2022-10-04T13:05:39+11:00">2022-10-04</time>
+                <time title="Modified: 2022-11-27 15:12:46" itemprop="dateModified" datetime="2022-11-27T15:12:46+11:00">2022-11-27</time>
               </span>
 
           
@@ -207,32 +207,176 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Hello world!</p>
-<span id="more"></span>
-<h1>fdfdf </h1>
+        <h1 id="Finding-Similar-items"><a href="#Finding-Similar-items" class="headerlink" title="Finding Similar items"></a>Finding Similar items</h1><span id="more"></span>
+<p><strong>Finding “similar” sets</strong></p>
+<ul>
+<li>Find near-neighbours in high-dimensional space</li>
+</ul>
+<h2 id="Distance-Measures"><a href="#Distance-Measures" class="headerlink" title="Distance Measures"></a>Distance Measures</h2><ul>
+<li><p>Jaccard distance/similarity</p>
+<img src="/2022/11/19/finding-similar-items/Jaccard.png" class="">
+</li>
+</ul>
+<h2 id="3-Essnential-steps-for-Similar-Docs"><a href="#3-Essnential-steps-for-Similar-Docs" class="headerlink" title="3 Essnential steps for Similar Docs"></a>3 Essnential steps for Similar Docs</h2><ul>
+<li><p><strong>Shingling</strong>: convert documents to sets</p>
+<ul>
+<li><strong>a k-shingle (or k-gram) for a document is a sequence of k tokens that appears in the doc</strong><ul>
+<li>Tokens can be characters, words or something else, depending on the application.</li>
+<li>Assume tokens = characters for examples</li>
+</ul>
+</li>
+<li>Example: k=2; document D1 = abcab<ul>
+<li>Set of 2-shingles: S(D1) = {ab, bc, ca, ab}</li>
+<li>Option: Shingles as a bag (multiset), count ab twice: S’(D1) = {ab, bc, ca, ab}</li>
+</ul>
+</li>
+<li><strong>shingles and similarity</strong><ul>
+<li>Documents that are intuitively similar will have many shingles in common</li>
+<li>Changing a word only affects k-shingles within distance <strong>k-1</strong> from the word.</li>
+<li>Reordering paragraphs only affects the <strong>2k</strong> shingles that cross paragraph boundries.</li>
+</ul>
+</li>
+<li><strong>Compressing Shingles</strong><ul>
+<li>To compress long shingles, we can <strong>hash</strong> them to (say) 4 bytes.</li>
+<li>Represent a doc by the set of hash values of its k-shingles<ul>
+<li>Idea: Two documents could (rarely) appear to have shingles in common, when in fact only the hash-values were shared.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Similarity Metric for Shingles</strong><ul>
+<li>Doc D1 is a set of its k-shingles C1=S(D1)</li>
+<li>Equivalently, each doc is 0/1 vector in the space of k-shingles<ul>
+<li>Each unique shingle is a dimension</li>
+<li>Vectors are very sparse</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Working Assumption</strong><ul>
+<li>Documents that have lots of shingles in common have similar text, even if the text appears in different order.</li>
+<li>how to pick “k”<ul>
+<li>if we pick k too small, then we would expect most sequences of k characters to appear in most documents.<ul>
+<li>we could have documents whose shingle-sets had high Jaccard similarity, but the documents had none of the same sentences or even similarity.</li>
+<li>Extreme case: when we use k = 1, almost all Web pages will have high similarity.</li>
+</ul>
+</li>
+<li>You must pick k large enough, or most documents will have most shingles<ul>
+<li>k = 5 is OK for short documents</li>
+<li>k = 10 is better for long documents</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Motivation for Minhash/LSH</strong><ul>
+<li>Suppose we need to find near-duplicate documents among N = 1 million documents</li>
+<li>Naively, we would have to compute pairwise Jaccard similarities for every pair of docs<ul>
+<li>N(N - 1)/2 comparisons</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Encoding Sets as Bit Vectors</strong><ul>
+<li>Many similarity problems can be formalised as finding subsets that have significant intersection.</li>
+<li>Encode sets using 0/1 (bit, boolen) vectors<ul>
+<li>One dimension per element in the universal set</li>
+</ul>
+</li>
+<li>Interpret set intersection as bitwise AND, and set union as bitwise OR</li>
+</ul>
+</li>
+<li><strong>From sets to Boolean Matrices</strong><ul>
+<li>Rows = elements (shingles)</li>
+<li>Cols = sets (document)</li>
+<li>Typical matrix is sparse</li>
+<li>Example: S1 = {a, d} S2 = {c}</li>
+</ul>
+</li>
+<li><strong>Hashing Columns (signatures)</strong><ul>
+<li>“hash” each column C to a small signature h(C), such that:<ul>
+<li>h(C) is small enough that the signature fits in RAM.</li>
+<li>Sim(C1, C2) is the same as the similarity of signatures h(C1) and h(C2)</li>
+</ul>
+</li>
+<li>Goal: Find a hash function h(.) such that:<ul>
+<li>if sim(C1, C2) is high, then with high prob. h(C1) = h(C2)</li>
+<li>if sim(C1, C2) is low, then with high prob. h(C1) != h(C2)</li>
+</ul>
+</li>
+<li>Hash docs into buckets. Expect that “most” pairs of near duplicate docs hash into the same bucket</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Min-Hashing</strong>: Convert large sest to short signatures, while preserving similarity</p>
+<ul>
+<li>Imagine the rows of the boolean matrix permuted under random permutation <code>pai</code></li>
+<li>Define a “hash” function h(C) = the index of the ‘first’ (in the permuted order pai) row in which column C has value 1</li>
+<li>Use several independent hash functions (that is permutations) to create a signature of a column. How large the new vector is depends on the size of the column.</li>
+<li>Similarity for Signatures:<ul>
+<li>Col/Col (before hash)</li>
+<li>Sig/Sig (after hash)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Locality-sensitive Hashing</strong>: Focus on pairs of signatures likely to be from similar document.<ul>
+<li>Candidate pairs</li>
+</ul>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>1</th>
+<th>0</th>
+<th>1</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>2</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
 
-
-
-<p>dfdfdf</p>
-<img src="/2022/09/16/first-post/div.png" class="" title="This is an image">
-<p>Dfdf</p>
-<p>ihihihih</p>
-<p>cdcd</p>
-<p>ihihihih</p>
-<p>cdcd</p>
-<p>ihihihih</p>
-<p>cdcd</p>
-<p>ihihihih</p>
-<p>cdcd</p>
-<p>ihihihih</p>
-<p>cdcd</p>
-<p>ihihihih</p>
-<p>cdcd</p>
-<p>ihihihih</p>
-<p>cdcd</p>
-<p><code>dfdfdfdfdfd </code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;a&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<h1 id="hi"><a href="#hi" class="headerlink" title="hi"></a>hi</h1><h2 id="hihi"><a href="#hihi" class="headerlink" title="hihi"></a>hihi</h2><h3 id="hihihi"><a href="#hihihi" class="headerlink" title="hihihi"></a>hihihi</h3><h4 id="hihihihi"><a href="#hihihihi" class="headerlink" title="hihihihi"></a>hihihihi</h4><h5 id="hihihihihi"><a href="#hihihihihi" class="headerlink" title="hihihihihi"></a>hihihihihi</h5><h6 id="hihihihiihihi"><a href="#hihihihiihihi" class="headerlink" title="hihihihiihihi"></a>hihihihiihihi</h6>
     </div>
 
     <div>
@@ -256,10 +400,13 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2022/09/18/Distributed-System/" rel="next" title="Distributed System">
-      Distributed System <i class="fa fa-chevron-right"></i>
+    <a href="/2022/10/25/Spark/" rel="prev" title="Spark">
+      <i class="fa fa-chevron-left"></i> Spark
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/25/Data-Streams/" rel="next" title="Data Streams">
+      Data Streams <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -319,7 +466,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">fdfdf </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hi"><span class="nav-number">2.</span> <span class="nav-text">hi</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hihi"><span class="nav-number">2.1.</span> <span class="nav-text">hihi</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hihihi"><span class="nav-number">2.1.1.</span> <span class="nav-text">hihihi</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#hihihihi"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">hihihihi</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#hihihihihi"><span class="nav-number">2.1.1.1.1.</span> <span class="nav-text">hihihihihi</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#hihihihiihihi"><span class="nav-number">2.1.1.1.1.1.</span> <span class="nav-text">hihihihiihihi</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Finding-Similar-items"><span class="nav-number">1.</span> <span class="nav-text">Finding Similar items</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Distance-Measures"><span class="nav-number">1.1.</span> <span class="nav-text">Distance Measures</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Essnential-steps-for-Similar-Docs"><span class="nav-number">1.2.</span> <span class="nav-text">3 Essnential steps for Similar Docs</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -432,6 +579,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
