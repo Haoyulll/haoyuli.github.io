@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:300,300italic,400,400italic,700,700italic|Open Sans:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"haoyulll.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Intro to Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java">
+<meta property="og:url" content="https://haoyulll.github.io/2022/12/19/Java/index.html">
+<meta property="og:site_name" content="Haoyu Li&#39;s note">
+<meta property="og:description" content="Intro to Java">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://haoyulll.github.io/2022/12/19/Java/primitive.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/12/19/Java/Input_types.png">
+<meta property="og:image" content="https://haoyulll.github.io/2022/12/19/Java/linklist.png">
+<meta property="article:published_time" content="2022-12-18T14:45:37.000Z">
+<meta property="article:modified_time" content="2022-12-21T13:24:50.916Z">
+<meta property="article:author" content="Haoyu Li">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://haoyulll.github.io/2022/12/19/Java/primitive.png">
+
+<link rel="canonical" href="https://haoyulll.github.io/2022/12/19/Java/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Java | Haoyu Li's note</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Haoyulll" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Haoyu Li's note</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://haoyulll.github.io/2022/12/19/Java/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Haoyu Li">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Haoyu Li's note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-12-19 01:45:37" itemprop="dateCreated datePublished" datetime="2022-12-19T01:45:37+11:00">2022-12-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-12-22 00:24:50" itemprop="dateModified" datetime="2022-12-22T00:24:50+11:00">2022-12-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Intro to Java</p>
+<span id="more"></span>
+<blockquote>
+<p>Data Types</p>
+</blockquote>
+<ul>
+<li>Diff1<ul>
+<li>Primitive are pre-defined (already defined) in Java. Non-premitive types are created by the prgrammer and is not deffined by Java. (Except for String)</li>
+<li>Non-primitive data types - such as String, Arrays, Classes.</li>
+</ul>
+</li>
+<li><p>Diff2</p>
+<ul>
+<li>Non-primitive types can be used to call methods to perform certain operations.</li>
+<li>while primitive types cannot</li>
+</ul>
+</li>
+<li><p>Diff3</p>
+<ul>
+<li>primitive types has always a value</li>
+<li>non-primitive types can be <code>null</code></li>
+</ul>
+</li>
+<li>diff4<ul>
+<li>A primitive type starts with a lowercase letter, </li>
+<li>while non-primitive types <code>start with</code> an uppercase letter</li>
+</ul>
+</li>
+<li>diff5<ul>
+<li>The size of a primitive type depends on the data type (check the following figure).</li>
+<li>While non-primitive types have all the same size. <ul>
+<li>Non-primitive data types or reference data types refer to instances or objects. They cannot store the value of a variable directly in memory. they store a <code>memory address</code> of the variable. </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img src="/2022/12/19/Java/primitive.png" class="" title="This is an image">
+<blockquote>
+<p>Class method</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">myMethod</span><span class="params">()</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;Hello world&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    myMethod();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Outputs &quot;Hello World&quot;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>static vs public</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// static method</span></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">myStaticMethod</span><span class="params">()</span> &#123;</span><br><span class="line">    system.out.println(<span class="string">&quot;Static method can be called without creating objects&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// public method</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">myPublicMethod</span><span class="params">()</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;public method must be called by creating objects&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// Main method</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    myStaticMethod(); <span class="comment">// call the static method</span></span><br><span class="line">    <span class="comment">// myPublicMethod(); This would compile an error</span></span><br><span class="line">  	</span><br><span class="line">    <span class="type">Main</span> <span class="variable">myObj</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Main</span>(); <span class="comment">// Create an object of Main</span></span><br><span class="line">    myobj.myPublicMethod(); <span class="comment">// call the method on the object.</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Java main() Method - public static void main(String [] args)</p>
+</blockquote>
+<p>In Java programs, the point from where the program starts its execution or simply the entry point of Java program is the main() Method. The Java compiler or JVM looks for the main method when it starts executing a Java program. The signature of the main method needs to be in a specific way for the JVM to recognize that method as its entry point.</p>
+<ul>
+<li><p>Public:</p>
+<ul>
+<li><p>An Access modifier, which specifies from where and who can access the method.</p>
+<ul>
+<li>Making the main() method public makes it globally available. It is made public so that JVM can invoke it from outside the class as it is not present in the current class.</li>
+</ul>
+</li>
+<li><p>```java<br>class CreeksforGreeks {<br>  private static void main(String[] args)<br>  {</p>
+<pre><code>System.out.println(&quot;I am a Greek&quot;);
+</code></pre><p>  }<br>}</p>
+<p>//Error<br>//Error: Main method not found in class, please define the main method as:<br>//public static void main(String[] args)<br>//or a JavaFX application class must extend javafx.application.Application</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- Static</span><br><span class="line"></span><br><span class="line">  - It is a keyword that is when associated with a method, making it a class-related method. The main() method is static so that JVM can invoke it without instantiating the class. This also saves the unnecessary wastage of memory which would have been used by the object declared only for calling the main() method by JVM.</span><br><span class="line"></span><br><span class="line">  - ```java</span><br><span class="line">    Error: Main method is not static in class test, please define the main method as:</span><br><span class="line">    public static void main(String[] args)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Void</p>
+<ul>
+<li>a keyword used to specify that a method doesn’t return anything. As the main() method doesn’t return anything, its return type is void. As soon as the main() method terminates, the java terminates too. Hence, it doesn’t make any sense to return from the main() method as JVM can’t do anything with the return value of it.</li>
+</ul>
+</li>
+<li><p>main</p>
+<ul>
+<li>It’s the name of the Java main method. It is the identifier that JVM looks foras the starting point of the java program. it’s not a keyword.</li>
+</ul>
+</li>
+<li><p>String[] args</p>
+<ul>
+<li><p>It stores Java cmd line arguments and is an array of type <code>java.lang.string</code> class. Here, the name of the String array is args but it is not fixed and the user can use any name in place of it.</p>
+</li>
+<li><p>```java<br>// Java Program to demonstrate<br>// the working of String[] args<br>// in the main() method</p>
+<p>class GeeksforGeeks {</p>
+<pre><code>  // Commamd-Line Code -&gt;
+// javac GeeksforGeeks.java
+// java GeeksforGeeks 1 2 3
+
+public static void main(String[] args)
+&#123;
+    for (String elem : args)
+        System.out.println(elem);
+&#125;
+</code></pre><p>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- We can execute a java program without main method by using a static block.</span><br><span class="line"></span><br><span class="line">  - A static block in Java is a group of statements that gets executed only once when the class is loaded into the memory by ClassLoader. It is also known as a static initialization block, and it goes into the stakc memory.</span><br><span class="line"></span><br><span class="line">  - ```java</span><br><span class="line">    class StaticBlock &#123;</span><br><span class="line">      static</span><br><span class="line">      &#123;</span><br><span class="line">        System.out.println(</span><br><span class="line">        	&quot;This class can be executed without main&quot;);</span><br><span class="line">        System.exit(0);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Using Multiple Classes</p>
+</blockquote>
+<p><code>The name of the java file should match the class name.</code> In this example, we have created 2 files in the same directory.</p>
+<p>Main.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">fullThrottle</span><span class="params">()</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;The car is going as fast as it can&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">speed</span><span class="params">(<span class="type">int</span> maxSpeed)</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;Max speed is: &quot;</span> + maxSpeed)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Second.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Second</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Main</span> <span class="variable">myCar</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Main</span>();</span><br><span class="line">    myCar.fullThrottle();</span><br><span class="line">    myCar.speed(<span class="number">200</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//javac Main.java</span></span><br><span class="line"><span class="comment">// javac Second.java</span></span><br><span class="line"><span class="comment">// java Second</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Java Constructors</p>
+</blockquote>
+<p>A constructors in Java is a special method that is used to initialise objects.The constructor is called when an object of a class is created.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Create a Main class</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="type">int</span> x; <span class="comment">// Create a class attribute</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// Create a class constructor for the Main class</span></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">Main</span><span class="params">()</span> &#123;</span><br><span class="line">    x = <span class="number">5</span>; <span class="comment">// set the initial value for the class attribute x</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(Sttring[] args)</span> &#123;</span><br><span class="line">    <span class="type">Main</span> <span class="variable">myObj</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Main</span>();</span><br><span class="line">    <span class="comment">// Create an object of class Main (This will call the constructor)</span></span><br><span class="line">    </span><br><span class="line">    System.out.println(myobj.x);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Constructor Parameters</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">	<span class="type">int</span> x;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">Main</span><span class="params">(<span class="type">int</span> y)</span> &#123;</span><br><span class="line">    x = y;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Main</span> <span class="variable">myobj</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Main</span>(<span class="number">5</span>);</span><br><span class="line">    System.out.println(myobj.x);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Modifiers</p>
+</blockquote>
+<p>The <code>public</code> keyword is an <strong>access modifier</strong>, meaning that it is used to set the access level for classes, attributes, methods and constructors.</p>
+<p><strong>Modifers types:</strong></p>
+<ul>
+<li>Access Modifiers - controls the access level</li>
+<li>Non-Access Modifiers - do not control access level. but provides other functionality.</li>
+</ul>
+<p>(1) Access Modifiers</p>
+<p><strong>For classes</strong></p>
+<ul>
+<li>public</li>
+<li>default</li>
+</ul>
+<p><strong>For attributes, methods and constructors</strong></p>
+<ul>
+<li><p>public: The code is accessible for all classes</p>
+<ul>
+<li><p>```java<br>public class Main {<br>  public String fname = “John”;<br>  public String lname = “Doe”;<br>  public String email = “john@doe.com”;<br>  public int age = 24;<br>}</p>
+<p>class Second {<br>  public static void main(String[] args) {</p>
+<pre><code>Main myObj = new Main(); 
+System.out.println(&quot;Name: &quot; + myObj.fname + &quot; &quot; + myObj.lname);
+System.out.println(&quot;Email: &quot; + myObj.email);
+System.out.println(&quot;Age: &quot; + myObj.age);
+</code></pre><p>  }<br>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  - </span><br><span class="line"></span><br><span class="line">- Private: The code is only accessible within the declared class</span><br><span class="line"></span><br><span class="line">  - ```java</span><br><span class="line">    public class Main &#123;</span><br><span class="line">      private String fname = &quot;John&quot;;</span><br><span class="line">      private String lname = &quot;Doe&quot;;</span><br><span class="line">      private String email = &quot;john@doe.com&quot;;</span><br><span class="line">      private int age = 24;</span><br><span class="line">      </span><br><span class="line">      public static void main(String[] args) &#123;</span><br><span class="line">        Main myObj = new Main();</span><br><span class="line">        System.out.println(&quot;Name: &quot; + myObj.fname + &quot; &quot; + myObj.lname);</span><br><span class="line">        System.out.println(&quot;Email: &quot; + myObj.email);</span><br><span class="line">        System.out.println(&quot;Age: &quot; + myObj.age);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>default</p>
+<ul>
+<li>The code is only accessible in the same package. This is used when you don’t specify a modifier.</li>
+</ul>
+</li>
+<li><p>Protected:</p>
+<ul>
+<li><p>The code is accessible in the same package and subclass.</p>
+</li>
+<li><p>```java<br>class Person {<br>  protected String fname = “John”;<br>  protected String lname = “Doe”;<br>  protected String email = “john@doe.com”;<br>  protected int age = 24;<br>}</p>
+<p>class Student extends Person {<br>  private int graduationYear = 2018;<br>  public static void main(String[] args) {</p>
+<pre><code>Student myObj = new Student();
+System.out.println(&quot;Name: &quot; + myObj.fname + &quot; &quot; + myObj.lname);
+System.out.println(&quot;Email: &quot; + myObj.email);
+System.out.println(&quot;Age: &quot; + myObj.age);
+System.out.println(&quot;Graduation Year: &quot; + myObj.graduationYear);
+</code></pre><p>  }<br>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">(2) Non-Access Modifers</span><br><span class="line"></span><br><span class="line">**For classes**</span><br><span class="line"></span><br><span class="line">- final</span><br><span class="line"></span><br><span class="line">  - The class cannot be inherited by other classes.</span><br><span class="line"></span><br><span class="line">- abstract</span><br><span class="line"></span><br><span class="line">  - The class cannot be used to create objects. To access an abstract class, it must be inherited from another class.</span><br><span class="line"></span><br><span class="line">  - ```java</span><br><span class="line">    // abstract class</span><br><span class="line">    abstract class Main &#123;</span><br><span class="line">      public String fname = &quot;John&quot;;</span><br><span class="line">      public String lname = &quot;Doe&quot;;</span><br><span class="line">      public String email = &quot;john@doe.com&quot;;</span><br><span class="line">      public int age = 24;</span><br><span class="line">      public abstract void study(); // abstract method </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // Subclass (inherit from Person)</span><br><span class="line">    class Student extends Main &#123;</span><br><span class="line">      public int graduationYear = 2018;</span><br><span class="line">      public void study() &#123;</span><br><span class="line">        System.out.println(&quot;Studying all day long&quot;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    class Second &#123;</span><br><span class="line">      public static void main(String[] args) &#123;</span><br><span class="line">        // create an object of the Student class (which inherits attributes and methods from Main)</span><br><span class="line">        Student myObj = new Student(); </span><br><span class="line">        </span><br><span class="line">        System.out.println(&quot;Name: &quot; + myObj.fname + &quot; &quot; + myObj.lname);</span><br><span class="line">        System.out.println(&quot;Email: &quot; + myObj.email);</span><br><span class="line">        System.out.println(&quot;Age: &quot; + myObj.age);</span><br><span class="line">        System.out.println(&quot;Graduation Year: &quot; + myObj.graduationYear);</span><br><span class="line">        myObj.study(); // call abstract method</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>For attributes and methods</strong></p>
+<ul>
+<li><p>final</p>
+<ul>
+<li><p>Attributes and methods cannot be overridden/modified</p>
+</li>
+<li><p>```java<br>public class Main {<br>  final int x = 10;<br>  final double PI = 3.14;</p>
+<p>  public static void main(String[] args) {</p>
+<pre><code>Main myObj = new Main();
+myObj.x = 50; // will generate an error: cannot assign a value to a final variable
+myObj.PI = 25; // will generate an error: cannot assign a value to a final variable
+System.out.println(myObj.x);
+</code></pre><p>  }<br>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- static</span><br><span class="line"></span><br><span class="line">  - Attributes and methods belongs to the class, rather than an object.</span><br><span class="line"></span><br><span class="line">&gt; Encapsulation</span><br><span class="line"></span><br><span class="line">Purpose: make sure that &quot;sensitive&quot; data is hidden from users.Class attributes can be made read-only/ write-only. Increase the data security.</span><br><span class="line"></span><br><span class="line">- Declare class variables/attributes as private</span><br><span class="line">- Provide public `get` and `set` methods to access and update the value of a private variable</span><br><span class="line"></span><br><span class="line">The `get` method returns the variable value, `set` method sets the value.</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">public class Person &#123;</span><br><span class="line">  private String name;</span><br><span class="line">  </span><br><span class="line">  // Getter</span><br><span class="line">  public String getName() &#123;</span><br><span class="line">    return name;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // Setter</span><br><span class="line">  public void setName(String newName) &#123;</span><br><span class="line">    this.name = newName;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>User-defined packages</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> mypack;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyPackageClass</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;This is my package&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Java inheritance</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Vehicle</span> &#123;</span><br><span class="line">  <span class="keyword">protected</span> <span class="type">String</span> <span class="variable">brand</span> <span class="operator">=</span> <span class="string">&quot;Ford&quot;</span>;        <span class="comment">// Vehicle attribute</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">honk</span><span class="params">()</span> &#123;                    <span class="comment">// Vehicle method</span></span><br><span class="line">    System.out.println(<span class="string">&quot;Tuut, tuut!&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span> <span class="keyword">extends</span> <span class="title class_">Vehicle</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="type">String</span> <span class="variable">modelName</span> <span class="operator">=</span> <span class="string">&quot;Mustang&quot;</span>;    <span class="comment">// Car attribute</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create a myCar object</span></span><br><span class="line">    <span class="type">Car</span> <span class="variable">myCar</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Call the honk() method (from the Vehicle class) on the myCar object</span></span><br><span class="line">    myCar.honk();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Display the value of the brand attribute (from the Vehicle class) and the value of the modelName from the Car class</span></span><br><span class="line">    System.out.println(myCar.brand + <span class="string">&quot; &quot;</span> + myCar.modelName);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Java Inner Classes</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Java Inner Classes</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">OuterClass</span> &#123;</span><br><span class="line">  <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">InnerClass</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> <span class="number">5</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">OuterClass</span> <span class="variable">myOuter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">OuterClass</span>();</span><br><span class="line">    OuterClass.<span class="type">InnerClass</span> <span class="variable">myInner</span> <span class="operator">=</span> myOuter.<span class="keyword">new</span> <span class="title class_">InnerClass</span>();</span><br><span class="line">    System.out.println(myInner.y + ,myOuter.x)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// static inner class</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">OuterClass</span> &#123;</span><br><span class="line">  <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">InnerClass</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> <span class="number">5</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    OuterClass.<span class="type">InnerClass</span> <span class="variable">myInner</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">outerClass</span>.InnerClass();</span><br><span class="line">    System.out.println(myInner.y);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Access Outer Class From Inner Class</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">OuterClass</span> &#123;</span><br><span class="line">  <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">InnerClass</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">myInnerMethod</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">OuterClass</span> <span class="variable">myOuter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">OuterClass</span>();</span><br><span class="line">    OuterClass.<span class="type">InnerClass</span> <span class="variable">myInner</span> <span class="operator">=</span> myOuter.<span class="keyword">new</span> <span class="title class_">InnerClass</span>();</span><br><span class="line">    System.out.println(myInner.myInnerMethod());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Outputs 10</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Abstraction-1: Abstract Classes and Methods</p>
+</blockquote>
+<p>Data abstraction is the process of hiding certain details and showing only essential information to the user. </p>
+<p><code>Abstraction can be achieved with either abstract classes or interfaces</code>.</p>
+<p>The abstract keyword is a non-access modifier, used for classes and methods;</p>
+<ul>
+<li>Abstract class: is a restricted class that cannot be used to create objects (to access it, it must be inherited from another class)</li>
+<li>Abstract method: can only be used in an abstract class, and it does not have a body. The body is provided by the subclass (inherited from).</li>
+</ul>
+<p>An abstract class can have both abstract and regular methods.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Abstract class</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">  <span class="comment">// Abstract method (does not have a body)</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">animalSound</span><span class="params">()</span>;</span><br><span class="line">  <span class="comment">// Regular method</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sleep</span><span class="params">()</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;Zzz&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Subclass (inherit from Animal)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Pig</span> <span class="keyword">extends</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">animalSound</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// The body og animalSound() is provided here</span></span><br><span class="line">    System.out.println(<span class="string">&quot;The pig says: we we&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Pig</span> <span class="variable">myPig</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">pig</span>(); <span class="comment">// Create a Pig Object</span></span><br><span class="line">    myPig.animalSound();</span><br><span class="line">    myPig.sleep();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Abstraction2: Interfaces</p>
+</blockquote>
+<p>An <code>interfaces</code> is a completely “abstract class” that is used to group related methods with empty bodies.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// interface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">animalSound</span><span class="params">()</span>; <span class="comment">// interface method (does not have a body)</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>; <span class="comment">// interface method (does not have a body)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>To access the interface methods, the interface must be “implemented” by another class with the <code>implements</code> keyword (instead of extends). The body of the interface method is provided by the <code>implement</code> class.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Interface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">animalSound</span><span class="params">()</span>; <span class="comment">// interface method (does not have a body)</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sleep</span><span class="params">()</span>; <span class="comment">// interface method (does not have a body)</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Pig `implements` the Animal interface</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Pig</span> <span class="keyword">implements</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">animalSound</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// The body of animalSound() is provided here</span></span><br><span class="line">    System.out.println(<span class="string">&quot;The pig says: wee wee&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sleep</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// The body of sleep() is provided here</span></span><br><span class="line">    System.out.println(<span class="string">&quot;Zzz&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Pig</span> <span class="variable">myPig</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Pig</span>(); <span class="comment">// Create a Pig object</span></span><br><span class="line">    myPig.animalSound();</span><br><span class="line">    myPig.sleep();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Multiple interfaces</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">FirstInterface</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">myMethod</span><span class="params">()</span>; <span class="comment">// interface method</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">SecondInterface</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">myOtherMethod</span><span class="params">()</span>; <span class="comment">// interface method</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DemoClass</span> <span class="keyword">implements</span> <span class="title class_">FirstInterface</span>, SecondInterface &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">myMethod</span><span class="params">()</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;Some text..&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">myOtherMethod</span><span class="params">()</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;Some other text...&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">DemoClass</span> <span class="variable">myObj</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DemoClass</span>();</span><br><span class="line">    myObj.myMethod();</span><br><span class="line">    myObj.myOtherMethod(); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Java Enums</p>
+</blockquote>
+<p>An enum is a special ‘class’ that represents a group of <code>constants</code>(unchangeable vars, like <code>final</code> vars)</p>
+<p>To create an <code>enum</code>, use the <code>enum</code> keyword and separate the constants with a comma. Note that they should be in uppercase letters.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Level</span> &#123;</span><br><span class="line">  LOW,</span><br><span class="line">  MEDIUM,</span><br><span class="line">  HIGH</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">Level</span> <span class="variable">myvar</span> <span class="operator">=</span> Level.MEDIUM;</span><br></pre></td></tr></table></figure>
+<p><strong>enum inside a a Class</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">enum</span> <span class="title class_">Level</span> &#123;</span><br><span class="line">    LOW,</span><br><span class="line">    MEDIUM,</span><br><span class="line">    HIGH</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Level</span> <span class="variable">myVar</span> <span class="operator">=</span> Level.MEDIUM;</span><br><span class="line">    System.out.println(myVar);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Loop Through an Enum</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (Level myVar : Level.values()) &#123;</span><br><span class="line">  System.out.println(myVar);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Difference between Enums and Classes</strong></p>
+<p>An <code>enum</code> can, just like a<code>class</code>, have attribute and methods. The only difference is that enum are <code>public</code>, <code>static</code>, <code>final</code> (unchangeable - cannot be overridden).</p>
+<p>An <code>enum</code> cannot be used to create objects, and it cannot extend other classes (but it can implement interfaces). </p>
+<p>Why And When To Use Enums?</p>
+<p>Use enums when you have values that you know aren’t going to change, like month days, days, colors, deck of cards, etc.</p>
+<blockquote>
+<p>Java User Input (Scanner)</p>
+</blockquote>
+<p>The <code>scanner</code> class is used to get user input, and it is found in the <code>java.util</code> package.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner; <span class="comment">// Import the Scanner class</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Scanner</span> <span class="variable">myObj</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Scanner</span>(System.in);</span><br><span class="line">    System.out.println(<span class="string">&quot;Enter username&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="type">String</span> <span class="variable">userName</span> <span class="operator">=</span> myObj.nextLine(); <span class="comment">//Read userinput</span></span><br><span class="line">    System.out.println(<span class="string">&quot;Username is: &quot;</span> + userName);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="/2022/12/19/Java/Input_types.png" class="" title="This is an image">
+<blockquote>
+<p>Java ArrayList</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Create an ArrayList Object called cars that will be store strings</span></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList; <span class="comment">// import the ArrayList class</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    ArrayList&lt;String&gt; cars = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">    cars.add(<span class="string">&quot;Volvo&quot;</span>);</span><br><span class="line">    cars.add(<span class="string">&quot;BMW&quot;</span>);</span><br><span class="line">    cars.add(<span class="string">&quot;Ford&quot;</span>);</span><br><span class="line">    cars.add(<span class="string">&quot;Mazda&quot;</span>);</span><br><span class="line">    System.out.println(cars);</span><br><span class="line">    </span><br><span class="line">    cars.get(<span class="number">0</span>);<span class="comment">// Volvo</span></span><br><span class="line">    cars.set(<span class="number">0</span>, <span class="string">&quot;Opel&quot;</span>);</span><br><span class="line">    cars.remove(<span class="number">0</span>);</span><br><span class="line">    cars.clear();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; cars.size(); i++) &#123;</span><br><span class="line">      System.out.println(cars.get(i));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Sort an ArrayList</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Collections;  <span class="comment">// Import the Collections class</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    ArrayList&lt;String&gt; cars = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">    cars.add(<span class="string">&quot;Volvo&quot;</span>);</span><br><span class="line">    cars.add(<span class="string">&quot;BMW&quot;</span>);</span><br><span class="line">    cars.add(<span class="string">&quot;Ford&quot;</span>);</span><br><span class="line">    cars.add(<span class="string">&quot;Mazda&quot;</span>);</span><br><span class="line">    Collections.sort(cars);  <span class="comment">// Sort cars</span></span><br><span class="line">    <span class="keyword">for</span> (String i : cars) &#123;</span><br><span class="line">      System.out.println(i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Java LinkedList</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Import the LinkedList class</span></span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    LinkedList&lt;String&gt; cars = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;String&gt;();</span><br><span class="line">    cars.add(<span class="string">&quot;Volvo&quot;</span>);</span><br><span class="line">    cars.add(<span class="string">&quot;BMW&quot;</span>);</span><br><span class="line">    cars.add(<span class="string">&quot;Ford&quot;</span>);</span><br><span class="line">    cars.add(<span class="string">&quot;Mazda&quot;</span>);</span><br><span class="line">    System.out.println(cars);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>ArrayList vs. LinkedList</strong></p>
+<ul>
+<li>Common attributes<ul>
+<li>The LinkedList class is a collection which can contain many objects of the same type.</li>
+<li>The LinkedList class has all of the same methods as the ArrayList class, have almost the same operation set.</li>
+</ul>
+</li>
+<li>ArrayList and LinkedList are built very differently<ul>
+<li>How the ArrayList works<ul>
+<li>has a regular array inside it. When an element is added, it is placed into the array. If the array is not big enough, a new, larger array is created to replace the old one and the old one is removed.</li>
+</ul>
+</li>
+<li>How the linkedlist works<ul>
+<li>stores items in “containers”. The list has a link to the first container and each container has a link to the next container in the list. To add an element to the list, the element is placed into a new container and that container is linked to one of the other containers in the list.</li>
+<li><img src="/2022/12/19/Java/linklist.png" class="" title="This is an image">
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Java HashMap</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.HashMap; <span class="comment">// import the HashMap class</span></span><br><span class="line"></span><br><span class="line">HashMap&lt;String, String&gt; capitalCities = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, String&gt;();</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Import the HashMap class</span></span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="comment">// Create a HashMap object called capitalCities</span></span><br><span class="line">    HashMap&lt;String, String&gt; capitalCities = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, String&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Add keys and values (Country, City)</span></span><br><span class="line">    capitalCities.put(<span class="string">&quot;England&quot;</span>, <span class="string">&quot;London&quot;</span>);</span><br><span class="line">    capitalCities.put(<span class="string">&quot;Germany&quot;</span>, <span class="string">&quot;Berlin&quot;</span>);</span><br><span class="line">    capitalCities.put(<span class="string">&quot;Norway&quot;</span>, <span class="string">&quot;Oslo&quot;</span>);</span><br><span class="line">    capitalCities.put(<span class="string">&quot;USA&quot;</span>, <span class="string">&quot;Washington DC&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    capitalCities.get(<span class="string">&quot;England&quot;</span>);</span><br><span class="line">    capitalCities.remove(<span class="string">&quot;England&quot;</span>);</span><br><span class="line">    capitalCities.clear();</span><br><span class="line">    capitalCities.size();</span><br><span class="line">    </span><br><span class="line">    System.out.println(capitalCities);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Loop Through a HashMap</strong></p>
+<p>Use the <code>keySet()</code> method if you only want the keys, and use <code>values()</code> method for values</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Print keys</span></span><br><span class="line"><span class="keyword">for</span> (String i : capitalCities.keySet()) &#123;</span><br><span class="line">  System.out.println(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Print values</span></span><br><span class="line"><span class="keyword">for</span> (String i : capitalCities.values()) &#123;</span><br><span class="line">  System.out.println(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Print keys and values</span></span><br><span class="line"><span class="keyword">for</span> (String i : capitalCities.keySet()) &#123;</span><br><span class="line">  System.out.println(<span class="string">&quot;key: &quot;</span> + i + <span class="string">&quot; value: &quot;</span> + capitalCities.get(i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Java Hashset</p>
+</blockquote>
+<p>A Hashset is a collection of items where every item is unique, and it is found in the <code>java.util</code> package.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Import the HashSet class</span></span><br><span class="line"><span class="keyword">import</span> java.util.HashSet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    HashSet&lt;String&gt; cars = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;String&gt;();</span><br><span class="line">    cars.add(<span class="string">&quot;Volvo&quot;</span>);</span><br><span class="line">    cars.add(<span class="string">&quot;BMW&quot;</span>);</span><br><span class="line">    cars.add(<span class="string">&quot;Ford&quot;</span>);</span><br><span class="line">    cars.add(<span class="string">&quot;BMW&quot;</span>);</span><br><span class="line">    cars.add(<span class="string">&quot;Mazda&quot;</span>);</span><br><span class="line">    cars.contains(<span class="string">&quot;Mazda&quot;</span>);</span><br><span class="line">    cars.remove(<span class="string">&quot;Volvo&quot;</span>);</span><br><span class="line">    cars.clear();</span><br><span class="line">    cars.size();</span><br><span class="line">    System.out.println(cars);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Java iterator</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Import the ArrayList class and the Iterator class</span></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Make a collection</span></span><br><span class="line">    ArrayList&lt;String&gt; cars = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">    cars.add(<span class="string">&quot;Volvo&quot;</span>);</span><br><span class="line">    cars.add(<span class="string">&quot;BMW&quot;</span>);</span><br><span class="line">    cars.add(<span class="string">&quot;Ford&quot;</span>);</span><br><span class="line">    cars.add(<span class="string">&quot;Mazda&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get the iterator</span></span><br><span class="line">    Iterator&lt;String&gt; it = cars.iterator();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Print the first item</span></span><br><span class="line">    System.out.println(it.next());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>Looping through a collection</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">  System.out.println(it.next());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------Ending<i class="fa fa-paw"></i>Thanks-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/05/Leetcode/" rel="prev" title="Leetcode">
+      <i class="fa fa-chevron-left"></i> Leetcode
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <!--
+  <p class="site-author-name" itemprop="name">Haoyu Li</p>
+  -->
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Haoyu Li</span>
+</div>
+
+<div class="powered-by">
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <i class="fa fa-user-md"></i>
+    <span id="busuanzi_container_site_uv">
+        本站访客数:<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_pv">
+        本站访问量<span id="busuanzi_value_site_pv"></span>
+    </span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+</body>
+</html>
